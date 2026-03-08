@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>徐州 3 天 2 夜路线网站｜上海往返</title>
+  <style>
+    :root{
+      --bg:#0b1020;
+      --panel:rgba(255,255,255,.08);
+      --panel-2:rgba(255,255,255,.12);
+      --text:#ecf2ff;
+      --muted:#b7c3e0;
+      --accent:#79a8ff;
+      --accent-2:#8cf0c8;
+      --warn:#ffd479;
+      --danger:#ff9aa2;
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --radius:22px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(121,168,255,.28), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(140,240,200,.18), transparent 26%),
+        linear-gradient(180deg,#0b1020 0%,#111a31 55%,#0f1323 100%);
+      min-height:100vh;
+    }
+    .wrap{max-width:1200px;margin:0 auto;padding:28px 18px 72px}
+    .hero{
+      display:grid;grid-template-columns:1.3fr .9fr;gap:18px;align-items:stretch;
+    }
+    .card{
+      background:var(--panel);
+      border:1px solid rgba(255,255,255,.12);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .hero-main{padding:28px;position:relative;overflow:hidden}
+    .hero-main::after{
+      content:"";position:absolute;right:-80px;top:-80px;width:240px;height:240px;
+      background:radial-gradient(circle, rgba(121,168,255,.35), transparent 60%);
+      pointer-events:none;
+    }
+    h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.08;letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:15px;line-height:1.7;margin:0 0 16px}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
+    .badge{
+      padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);font-size:13px;color:#eef4ff
+    }
+    .hero-side{padding:20px;display:grid;gap:12px}
+    .mini{padding:16px 16px 14px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+    .mini h3{margin:0 0 8px;font-size:16px}
+    .mini p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
+
+    .section{margin-top:18px}
+    .grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    .panel{padding:22px}
+    .panel h2{margin:0 0 14px;font-size:24px}
+    .panel p,.panel li{color:var(--muted);line-height:1.75}
+    .timeline{display:grid;gap:14px}
+    .step{
+      display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:flex-start;
+      padding:14px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)
+    }
+    .dot{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:700}
+    .blue{background:rgba(121,168,255,.18);color:#cfe0ff}
+    .green{background:rgba(140,240,200,.18);color:#d6fff1}
+    .yellow{background:rgba(255,212,121,.18);color:#ffeab7}
+    .pink{background:rgba(255,154,162,.18);color:#ffd8dc}
+    .step h3{margin:0 0 6px;font-size:18px}
+    .step p{margin:0;color:var(--muted)}
+    .why{margin-top:8px;font-size:13px;color:#dce6ff;background:rgba(121,168,255,.09);padding:10px 12px;border-radius:12px}
+
+    .food-list,.weather-list{display:grid;gap:12px}
+    .food,.weather-item,.note{
+      padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)
+    }
+    .food h3,.weather-item h3,.note h3{margin:0 0 8px;font-size:17px}
+    .food p,.weather-item p,.note p{margin:0;color:var(--muted);line-height:1.7}
+    .tag{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.07);font-size:12px;color:#eaf1ff}
+
+    .route-line{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+    .route-pill{padding:10px 14px;border-radius:999px;background:rgba(121,168,255,.14);border:1px solid rgba(121,168,255,.25);font-size:13px}
+
+    .comment-box{display:grid;gap:12px}
+    label{font-size:13px;color:#dbe6ff}
+    input,textarea,button{
+      font:inherit;border:none;outline:none;border-radius:16px
+    }
+    input,textarea{
+      width:100%;padding:14px 16px;background:rgba(255,255,255,.07);color:var(--text);
+      border:1px solid rgba(255,255,255,.11)
+    }
+    textarea{min-height:120px;resize:vertical}
+    button{
+      padding:14px 18px;font-weight:700;cursor:pointer;
+      background:linear-gradient(135deg, #8cb3ff, #79f0c9);
+      color:#0c1427;box-shadow:0 10px 24px rgba(121,168,255,.25)
+    }
+    button.secondary{background:rgba(255,255,255,.08);color:var(--text);box-shadow:none;border:1px solid rgba(255,255,255,.12)}
+    .comment-item{
+      padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)
+    }
+    .comment-item strong{display:block;margin-bottom:6px}
+    .comment-meta{font-size:12px;color:#adc0ea;margin-bottom:8px}
+    .muted{color:var(--muted)}
+    .footer{margin-top:20px;color:#9fb2da;font-size:12px;line-height:1.7}
+    .topnav{
+      position:sticky;top:10px;z-index:20;margin-bottom:18px;padding:10px 14px;
+      display:flex;gap:10px;flex-wrap:wrap;background:rgba(12,18,36,.55);backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,.1);border-radius:999px;width:max-content;max-width:100%;overflow:auto
+    }
+    .topnav a{text-decoration:none;color:#eaf1ff;font-size:13px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06)}
+    @media (max-width: 920px){
+      .hero,.grid-2{grid-template-columns:1fr}
+      .wrap{padding-top:18px}
+      .topnav{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="topnav card">
+      <a href="#overview">总览</a>
+      <a href="#day1">3月14日</a>
+      <a href="#day2">3月15日</a>
+      <a href="#day3">3月16日</a>
+      <a href="#food">吃什么</a>
+      <a href="#comments">留言建议</a>
+    </nav>
+
+    <section class="hero" id="overview">
+      <div class="hero-main card">
+        <h1>徐州 3 天 2 夜<br>顺路版吃玩路线</h1>
+        <p class="sub">
+          去程：3 月 14 日从上海站乘 G986 出发，抵达徐州东。返程：3 月 16 日 17:10 从徐州东站乘 G8269 返回上海。<br>
+          这份网站把你想去的云龙湖、云龙山、云龙山索道、徐州博物馆，以及早餐店顺到一条比较省劲的路线里，同时把不太值得专门跑一趟的店做了取舍。
+        </p>
+        <div class="badges">
+          <span class="badge">适合发布分享</span>
+          <span class="badge">按天气优化</span>
+          <span class="badge">避开周一闭馆</span>
+          <span class="badge">保留留言功能</span>
+        </div>
+      </div>
+      <div class="hero-side card">
+        <div class="mini">
+          <h3>这次安排的核心思路</h3>
+          <p>把室外强体验放在天气更舒服的前两天，把徐州博物馆提前到周末，避免周一闭馆踩空。</p>
+        </div>
+        <div class="mini">
+          <h3>这次主保留的店</h3>
+          <p>恒香包子店、陈开武老味饣它汤。魏记火烧不做主线，只保留为候补加餐。</p>
+        </div>
+        <div class="mini">
+          <h3>留言区说明</h3>
+          <p>授权码为 517。输入后可发表建议并显示在页面里。当前版本为静态网页留言方案，适合展示与收集建议。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2">
+      <div class="panel card">
+        <h2>路线总览</h2>
+        <div class="route-line">
+          <span class="route-pill">Day 1：到达 → 陈开武老味饣它汤 → 云龙湖 → 云龙山 / 索道</span>
+          <span class="route-pill">Day 2：恒香包子店 → 徐州博物馆 → 轻松补拍 / 市区慢逛</span>
+          <span class="route-pill">Day 3：自由早餐 → 返程前机动时间 → 徐州东站</span>
+        </div>
+        <div class="note" style="margin-top:14px">
+          <h3>为什么这么排</h3>
+          <p>3 月 14 日和 15 日天气都还能走户外，其中 14 日更暖，适合先把云龙湖和云龙山这组连在一起；徐州博物馆周一闭馆，所以必须安排在 14 日或 15 日，这里放到 15 日上午更稳，也不会赶。</p>
+        </div>
+      </div>
+      <div class="panel card">
+        <h2>天气提醒</h2>
+        <div class="weather-list">
+          <div class="weather-item">
+            <h3>3 月 14 日（周六）</h3>
+            <p>多云，约 6–17°C。三天里相对最舒服，适合湖边散步、坐索道、上山看视野。</p>
+          </div>
+          <div class="weather-item">
+            <h3>3 月 15 日（周日）</h3>
+            <p>云量减少，约 6–10°C。体感比 14 日凉，适合把更稳定的室内行程放这天上午。</p>
+          </div>
+          <div class="weather-item">
+            <h3>3 月 16 日（周一）</h3>
+            <p>多云，约 7–13°C。徐州博物馆周一闭馆，所以这天只安排弹性活动和返程。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2" id="day1">
+      <div class="panel card">
+        <h2>Day 1｜3 月 14 日 周六</h2>
+        <div class="timeline">
+          <div class="step">
+            <div class="dot blue">1</div>
+            <div>
+              <h3>抵达徐州东 → 进市区</h3>
+              <p>到站后先去市区或酒店放行李，别把第一天搞太赶，主打一个开局舒服。</p>
+              <div class="why">这样排是因为你上午到徐州，第一天本来就最适合把大景点打掉。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="dot green">2</div>
+            <div>
+              <h3>午早饭 / 早午餐：陈开武老味饣它汤</h3>
+              <p>主吃饣它汤 + 煎饺 / 煎包。它更像真正的徐州早餐代表，优先级高于魏记火烧。</p>
+              <div class="why">你第一顿建议直接吃最有城市辨识度的，不要浪费胃口在可替代项上。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="dot yellow">3</div>
+            <div>
+              <h3>云龙湖</h3>
+              <p>午后去云龙湖，沿湖散步、拍照、慢慢走。它和云龙山是一组连着玩的路线，顺路不折返。</p>
+              <div class="why">这天最暖，湖边体验最好；而且云龙湖是整趟里最轻松、最出片的一段。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="dot pink">4</div>
+            <div>
+              <h3>云龙山 + 云龙山索道</h3>
+              <p>建议玩法：上山坐索道，下山慢走；或者如果体力不错，就走一段山路再看情况补索道。</p>
+              <div class="why">索道和山景放在同一天，体验是完整的，而且你不用第二次专门往景区跑。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel card">
+        <h2>Day 1 边上说明</h2>
+        <div class="note">
+          <h3>适合发朋友圈的一天</h3>
+          <p>第一天是“徐州印象建立日”。湖景、山景、索道都有，内容丰富但并不乱，走起来也最顺。</p>
+        </div>
+        <div class="note" style="margin-top:12px">
+          <h3>晚饭这里故意没写死</h3>
+          <p>因为你给的重点是早餐店和景点，不想把一天塞太满。晚上可以在云龙湖附近就近吃，留给临场发挥。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2" id="day2">
+      <div class="panel card">
+        <h2>Day 2｜3 月 15 日 周日</h2>
+        <div class="timeline">
+          <div class="step">
+            <div class="dot blue">1</div>
+            <div>
+              <h3>早餐：恒香包子店</h3>
+              <p>推荐辣汤 + 肉包。价格友好，属于比较稳的本地早餐线。</p>
+              <div class="why">把两家最值得吃的都拆开安排，这样不会重复感太强，也不会一天吃太撑。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="dot green">2</div>
+            <div>
+              <h3>徐州博物馆</h3>
+              <p>建议上午去。重点看汉代文物相关展陈，节奏会更从容。</p>
+              <div class="why">博物馆周一闭馆，所以必须在周末解决；周日早上去最稳，不受返程那天限制。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="dot yellow">3</div>
+            <div>
+              <h3>下午自由机动</h3>
+              <p>可以二刷云龙湖轻松补拍，也可以在市区慢慢逛，把这天当成“缓冲日”。</p>
+              <div class="why">第二天不建议再硬塞新大景点，不然会让整趟节奏变成赶场。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel card">
+        <h2>Day 2 边上说明</h2>
+        <div class="note">
+          <h3>为什么博物馆不放 Day 1</h3>
+          <p>因为 Day 1 本身已经有云龙湖 + 云龙山 + 索道这组完整线，塞进博物馆会显得碎。把博物馆独立放到 Day 2，体验更完整。</p>
+        </div>
+        <div class="note" style="margin-top:12px">
+          <h3>周日安排的好处</h3>
+          <p>你前一天如果玩得久，第二天还能弹性起床；就算天气偏凉，博物馆这种室内点也不受太大影响。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2" id="day3">
+      <div class="panel card">
+        <h2>Day 3｜3 月 16 日 周一</h2>
+        <div class="timeline">
+          <div class="step">
+            <div class="dot blue">1</div>
+            <div>
+              <h3>早餐自由安排</h3>
+              <p>如果前两家都已经吃到，这天可以自由吃；如果特别喜欢其中一家，可以二刷。</p>
+              <div class="why">这天不需要为了打卡再折腾，轻松一点更合理。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="dot green">2</div>
+            <div>
+              <h3>机动时间</h3>
+              <p>可留给补拍、买点伴手礼、或者在市区再慢逛一会儿。徐州博物馆这天闭馆，不要安排进去。</p>
+              <div class="why">返程是 17:10，从容去徐州东站最重要，不建议这天再硬上远点位。</div>
+            </div>
+          </div>
+          <div class="step">
+            <div class="dot yellow">3</div>
+            <div>
+              <h3>前往徐州东站返程</h3>
+              <p>建议预留充分时间去车站，收尾要松一点，整趟旅程观感会更好。</p>
+              <div class="why">最后一天最怕“为了多塞一个点把自己弄得很狼狈”。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="panel card">
+        <h2>Day 3 边上说明</h2>
+        <div class="note">
+          <h3>魏记火烧怎么处理</h3>
+          <p>不放主线。因为评分相对一般，且你这趟时间不算太长，不值得专门绕路。如果刚好顺路、嘴馋、想加餐，再考虑。</p>
+        </div>
+        <div class="note" style="margin-top:12px">
+          <h3>这天的关键词</h3>
+          <p>收一收，松一点，别跟行程较劲。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2" id="food">
+      <div class="panel card">
+        <h2>这次保留 / 舍弃的吃法</h2>
+        <div class="food-list">
+          <div class="food">
+            <h3>保留 1：陈开武老味饣它汤</h3>
+            <p>更有徐州早餐辨识度，适合做第一顿。推荐：饣它汤 + 煎饺 / 煎包。</p>
+            <span class="tag">主线保留</span>
+          </div>
+          <div class="food">
+            <h3>保留 2：恒香包子店</h3>
+            <p>作为另一顿早餐很合适。推荐：辣汤 + 肉包，省心不踩雷。</p>
+            <span class="tag">主线保留</span>
+          </div>
+          <div class="food">
+            <h3>候补：魏记火烧</h3>
+            <p>特色有，但评分一般，不建议为了它专门改路线。只有在顺路或嘴馋时再吃。</p>
+            <span class="tag">可舍弃</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel card">
+        <h2>一句话总结</h2>
+        <div class="note">
+          <h3>吃法原则</h3>
+          <p>你这趟不是“吃遍徐州”，而是“把最值得保留的徐州味道，嵌进最顺的景点路线里”。所以不追求全吃，只追求顺路和体验感。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2" id="comments">
+      <div class="panel card">
+        <h2>留言建议区</h2>
+        <p class="muted">可以让别人补充建议，比如“哪里更值得吃”“是否要换一家早餐店”“索道要不要坐”等。需要输入授权码才能提交，授权码是 <strong>517</strong>。</p>
+        <div class="comment-box">
+          <div>
+            <label for="name">昵称</label>
+            <input id="name" placeholder="写个昵称，比如：会玩的朋友" />
+          </div>
+          <div>
+            <label for="pass">授权码</label>
+            <input id="pass" type="password" placeholder="输入授权码 517" />
+          </div>
+          <div>
+            <label for="message">建议内容</label>
+            <textarea id="message" placeholder="比如：云龙湖傍晚更好看；博物馆尽量早点预约；某家店可以替换成另一家……"></textarea>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button id="submitBtn">提交留言</button>
+            <button class="secondary" id="clearBtn" type="button">仅清空我当前浏览器里的留言</button>
+          </div>
+          <p id="tip" class="muted"></p>
+        </div>
+      </div>
+      <div class="panel card">
+        <h2>已显示的留言</h2>
+        <div id="commentList" class="comment-box"></div>
+      </div>
+    </section>
+
+    <div class="footer">
+      说明：这个网页是单文件静态版，适合直接发布。留言功能默认使用浏览器本地存储显示，适合演示、收集、整理意见。如果后续要做成“所有访客都能看到同一批留言”的正式线上版本，可以再接入数据库服务。
+    </div>
+  </div>
+
+  <script>
+    const AUTH_CODE = '517';
+    const STORAGE_KEY = 'xuzhou-trip-comments-v1';
+
+    const nameEl = document.getElementById('name');
+    const passEl = document.getElementById('pass');
+    const messageEl = document.getElementById('message');
+    const submitBtn = document.getElementById('submitBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const tipEl = document.getElementById('tip');
+    const listEl = document.getElementById('commentList');
+
+    function escapeHtml(str=''){ 
+      return str.replace(/[&<>"/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
+    }
+
+    function getComments(){
+      try{return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')}catch{return []}
+    }
+
+    function saveComments(data){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function renderComments(){
+      const items = getComments().sort((a,b)=>b.time-a.time);
+      if(!items.length){
+        listEl.innerHTML = '<div class="comment-item muted">还没有留言，欢迎第一个来补充建议。</div>';
+        return;
+      }
+      listEl.innerHTML = items.map(item => `
+        <div class="comment-item">
+          <strong>${escapeHtml(item.name || '匿名') }</strong>
+          <div class="comment-meta">${new Date(item.time).toLocaleString('zh-CN')}</div>
+          <div>${escapeHtml(item.message)}</div>
+        </div>
+      `).join('');
+    }
+
+    submitBtn.addEventListener('click', () => {
+      const name = nameEl.value.trim() || '匿名';
+      const pass = passEl.value.trim();
+      const message = messageEl.value.trim();
+      if(pass !== AUTH_CODE){
+        tipEl.textContent = '授权码不对，再看一眼，应该是 517。';
+        return;
+      }
+      if(!message){
+        tipEl.textContent = '建议内容还没写。';
+        return;
+      }
+      const data = getComments();
+      data.push({name, message, time: Date.now()});
+      saveComments(data);
+      messageEl.value = '';
+      passEl.value = '';
+      tipEl.textContent = '留言已显示。';
+      renderComments();
+    });
+
+    clearBtn.addEventListener('click', () => {
+      localStorage.removeItem(STORAGE_KEY);
+      tipEl.textContent = '当前浏览器里的留言已清空。';
+      renderComments();
+    });
+
+    renderComments();
+  </script>
+</body>
+</html>
