@@ -11,31 +11,48 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" />
+  <script>
+    (() => {
+      const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', systemDark ? 'night' : 'smoke');
+    })();
+  </script>
   <style>
     :root{
-      --bg:#0a1020;
-      --panel:rgba(255,255,255,.08);
-      --panel2:rgba(255,255,255,.05);
-      --text:#eef4ff;
-      --muted:#b7c3e0;
-      --line:rgba(255,255,255,.12);
-      --blue:#8cb4ff;
-      --green:#8fe6c2;
-      --orange:#ffd38a;
-      --red:#ff9ea7;
-      --shadow:0 12px 36px rgba(0,0,0,.28);
+      --bg:#121212;
+      --panel:rgba(30,30,30,0.8);
+      --panel2:rgba(44,44,44,0.6);
+      --text:rgba(255,255,255,0.87);
+      --muted:rgba(255,255,255,0.60);
+      --line:rgba(255,255,255,0.12);
+      --blue:#8ab4f8;
+      --green:#81c784;
+      --orange:#ffb74d;
+      --red:#e57373;
+      --shadow:0 8px 24px rgba(0,0,0,.4);
       --radius:22px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
+    html[data-theme="smoke"]{color-scheme:dark}
+    html[data-theme="night"]{color-scheme:dark}
     body{
       margin:0;
       font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
       color:var(--text);
-      background:
-        radial-gradient(circle at 10% 10%, rgba(140,180,255,.18), transparent 24%),
-        radial-gradient(circle at 85% 10%, rgba(143,230,194,.15), transparent 24%),
-        linear-gradient(180deg,#0a1020 0%,#101931 58%,#0d1325 100%);
+      background:#121212;
+      background-attachment: fixed;
+      transition:background .35s ease,color .25s ease;
+    }
+    html[data-theme="smoke"] body, html[data-theme="night"] body{
+      --panel:rgba(30,30,30,0.8);
+      --panel2:rgba(44,44,44,0.6);
+      --text:rgba(255,255,255,0.87);
+      --muted:rgba(255,255,255,0.60);
+      --line:rgba(255,255,255,0.12);
+      --shadow:0 8px 24px rgba(0,0,0,.4);
+      background:#121212;
+      background-attachment: fixed;
     }
     a{color:inherit}
     .wrap{max-width:1280px;margin:0 auto;padding:22px 18px 64px}
@@ -44,30 +61,46 @@
       border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
-      backdrop-filter:blur(18px);
-      -webkit-backdrop-filter:blur(18px);
+      backdrop-filter:blur(24px);
+      -webkit-backdrop-filter:blur(24px);
+      position:relative;
+      overflow:hidden;
+      transition:background .28s ease,border-color .28s ease,box-shadow .28s ease, transform .28s ease;
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,.2);
+      box-shadow: 0 12px 32px rgba(0,0,0,.6);
+    }
+    /* Removed the blocky and rough card:before that caused issues */
+    .card:before{
+      content: none;
     }
     .nav{
       position:sticky;top:12px;z-index:30;
       display:flex;gap:10px;flex-wrap:wrap;
       width:max-content;max-width:100%;overflow:auto;
-      margin-bottom:18px;padding:10px 12px;background:rgba(10,16,32,.58)
+      margin-bottom:18px;padding:10px 12px;
+      background:rgba(24,24,24,.85);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      backdrop-filter: blur(12px);
     }
     .nav a{
       text-decoration:none;padding:9px 12px;border-radius:999px;
-      background:rgba(255,255,255,.06);font-size:13px;white-space:nowrap
+      background:rgba(255,255,255,.04);font-size:13px;white-space:nowrap;
+      transition: all .2s ease;
+      color: var(--muted);
+    }
+    .nav a:hover {
+      background:rgba(255,255,255,.12);
+      color: var(--text);
     }
     .nav a:focus-visible,.day-tab:focus-visible,.mode-tab:focus-visible,.segment-btn:focus-visible,.nav-jump:focus-visible{
-      outline:2px solid #ffd38a;
+      outline:2px solid var(--blue);
       outline-offset:2px;
     }
     .hero{display:grid;grid-template-columns:1.35fr .9fr;gap:18px}
     .hero-main{padding:28px;position:relative;overflow:hidden}
-    .hero-main:after{
-      content:"";position:absolute;right:-80px;top:-80px;width:220px;height:220px;
-      background:radial-gradient(circle, rgba(140,180,255,.28), transparent 62%);
-      pointer-events:none;
-    }
     h1{
       margin:0 0 10px;
       font-size:clamp(30px,4vw,50px);
@@ -75,29 +108,50 @@
       font-family:"Alfa Slab One","Noto Sans SC",sans-serif;
       letter-spacing:.02em;
       font-weight:400;
+      color: var(--text);
     }
     .sub{margin:0;color:var(--muted);font-size:15px;line-height:1.8}
     .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
-    .badge{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line);font-size:13px}
+    .badge{
+      padding:10px 14px;border-radius:999px;
+      background:rgba(138,180,248,.1);
+      border:1px solid rgba(138,180,248,.3);
+      font-size:13px;
+      color: var(--blue);
+      transition: all .3s ease;
+    }
+    .badge:hover {
+      background:rgba(138,180,248,.2);
+      border-color: rgba(138,180,248,.5);
+    }
     .cover-art{
       margin-top:16px;
       min-height:220px;
       border-radius:20px;
-      border:1px solid rgba(255,255,255,.2);
+      border:1px solid var(--line);
       padding:20px;
       position:relative;
       overflow:hidden;
       background:
-        linear-gradient(130deg, rgba(255,211,138,.32), rgba(140,180,255,.25) 40%, rgba(143,230,194,.22)),
-        radial-gradient(circle at 15% 75%, rgba(255,255,255,.22), transparent 55%),
-        linear-gradient(180deg, #17243f, #111a2e);
+        radial-gradient(circle at 20% 80%, rgba(229,115,115,.08), transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(138,180,248,.08), transparent 60%),
+        #1a1a1a;
     }
+    html[data-theme="smoke"] .cover-art, html[data-theme="night"] .cover-art{
+      border-color:var(--line);
+      background:
+        radial-gradient(circle at 20% 80%, rgba(138,180,248,.08), transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(229,115,115,.08), transparent 60%),
+        #1e1e1e;
+    }
+    /* Smooth out the circles in cover-art to prevent blockiness */
     .cover-art:before{
       content:"";
       position:absolute;
-      width:240px;height:240px;right:-70px;bottom:-120px;
+      width:300px;height:300px;right:-100px;bottom:-150px;
       border-radius:50%;
-      background:rgba(255,255,255,.18);
+      background:radial-gradient(circle, rgba(255,255,255,.05), transparent 70%);
+      filter: blur(30px);
     }
     .cover-art:after{
       content:"";
@@ -109,6 +163,7 @@
       position:relative;z-index:1;
       font-size:12px;letter-spacing:.12em;font-weight:700;color:#fff9de;
     }
+    html[data-theme="smoke"] .cover-kicker{color:#d1d5db}
     .cover-title{
       position:relative;z-index:1;
       margin-top:10px;
@@ -118,6 +173,10 @@
       max-width:11ch;
       text-shadow:0 6px 20px rgba(6,10,25,.45);
     }
+    html[data-theme="smoke"] .cover-title{
+      color:#f3f4f6;
+      text-shadow:0 0 10px rgba(156,163,175,.18);
+    }
     .cover-meta{
       position:relative;z-index:1;
       display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;
@@ -125,52 +184,81 @@
     .cover-meta span{
       padding:6px 10px;
       border-radius:999px;
-      background:rgba(10,16,32,.52);
-      border:1px solid rgba(255,255,255,.25);
+      background:rgba(255,183,77,.15);
+      border:1px solid rgba(255,183,77,.2);
       font-size:12px;
-      color:#f7fbff;
+      color:var(--orange);
+    }
+    html[data-theme="smoke"] .cover-meta span{
+      border:1px solid rgba(255,183,77,.2);
+      color:var(--orange);
     }
     .hero-side{display:grid;gap:12px;padding:18px}
-    .mini{padding:16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
+    .mini{padding:16px;border-radius:18px;background:var(--panel2);border:1px solid var(--line); transition: background 0.3s ease, border-color 0.3s ease;}
+    .mini:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); }
     .mini h3,.panel h2{margin:0 0 10px}
     .mini p,.panel p,.panel li,.meta,.small{color:var(--muted);line-height:1.75}
     .section{margin-top:18px}
     .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
     .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .panel{padding:22px}
-    .panel h2{font-size:24px}
+    .panel h2{font-size:24px;}
     .route-line{display:flex;flex-wrap:wrap;gap:10px}
-    .pill{padding:10px 14px;border-radius:999px;background:rgba(140,180,255,.12);border:1px solid rgba(140,180,255,.24);font-size:13px}
-    .note{padding:14px 16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
+    .pill{
+      padding:10px 14px;border-radius:999px;
+      background:rgba(138,180,248,.15);
+      border:1px solid rgba(138,180,248,.2);
+      font-size:13px;
+      color:var(--blue);
+    }
+    .note{padding:14px 16px;border-radius:18px;background:rgba(255,183,77,.08);border:1px solid rgba(255,183,77,.15);}
     .timeline{display:grid;gap:14px}
-    .step{display:grid;grid-template-columns:42px 1fr;gap:14px;padding:14px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
-    .dot{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:800}
-    .blue{background:rgba(140,180,255,.18)} .green{background:rgba(143,230,194,.18)} .orange{background:rgba(255,211,138,.18)} .red{background:rgba(255,158,167,.18)}
-    .step h3{margin:0 0 6px;font-size:18px}
-    .why{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(140,180,255,.1);font-size:13px;color:#dce8ff}
+    .step{display:grid;grid-template-columns:42px 1fr;gap:14px;padding:14px;border-radius:18px;background:var(--panel2);border:1px solid var(--line); transition: background .3s, border-color .3s;}
+    .step:hover {background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15);}
+    .dot{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:800;}
+    .blue{background:rgba(138,180,248,.15); color:var(--blue);} 
+    .green{background:rgba(129,199,132,.15); color:var(--green);} 
+    .orange{background:rgba(255,183,77,.15); color:var(--orange);} 
+    .red{background:rgba(229,115,115,.15); color:var(--red);}
+    .step h3{margin:0 0 6px;font-size:18px;}
+    .why{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(138,180,248,.08);font-size:13px;color:rgba(255,255,255,.8); border:1px solid rgba(138,180,248,.15);}
     .boxlist{display:grid;gap:12px}
-    .box{padding:14px 16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
-    .box h3{margin:0 0 8px;font-size:17px}
+    .box{padding:14px 16px;border-radius:18px;background:var(--panel2);border:1px solid var(--line); transition: background .3s, border-color .3s;}
+    .box:hover {background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15);}
+    .box h3{margin:0 0 8px;font-size:17px;}
     .food-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-    .food-card{padding:16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
-    .food-card h3{margin:0 0 8px;font-size:18px}
+    .food-card{padding:16px;border-radius:18px;background:var(--panel2);border:1px solid var(--line); transition: background .3s, border-color .3s;}
+    .food-card:hover {background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15);}
+    .food-card h3{margin:0 0 8px;font-size:18px;}
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}
     .tag{padding:5px 9px;border-radius:999px;font-size:12px;background:rgba(255,255,255,.07)}
-    .tag.good{background:rgba(143,230,194,.16)}
-    .tag.ok{background:rgba(255,211,138,.16)}
-    .tag.no{background:rgba(255,158,167,.16)}
+    .tag.good{background:rgba(129,199,132,.15); color:var(--green);}
+    .tag.ok{background:rgba(255,183,77,.15); color:var(--orange);}
+    .tag.no{background:rgba(229,115,115,.15); color:var(--red);}
     .summary-table{width:100%;border-collapse:collapse;font-size:14px}
-    .summary-table th,.summary-table td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top;text-align:left}
-    .summary-table th{color:#dce7ff;font-weight:700}
-    .comment-box{display:grid;gap:12px}
-    input,textarea,button{font:inherit;border:none;outline:none;border-radius:16px}
-    input,textarea{width:100%;padding:14px 16px;background:rgba(255,255,255,.07);color:var(--text);border:1px solid rgba(255,255,255,.12)}
-    textarea{min-height:120px;resize:vertical}
-    button{padding:14px 18px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#8cb4ff,#8fe6c2);color:#07111f;box-shadow:0 10px 24px rgba(140,180,255,.22)}
-    .comment-item{padding:16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
-    .comment-item strong{display:block;margin-bottom:6px}
-    .comment-meta{font-size:12px;color:#acc2ef;margin-bottom:8px}
-    .footer{margin-top:20px;font-size:12px;color:#99add4;line-height:1.8}
+    .summary-table th,.summary-table td{padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}
+    .summary-table th{color:var(--text);font-weight:700;}
+    /* ── 天气插件 ── */
+    .wx-panel{display:grid;gap:10px;margin-bottom:12px}
+    .wx-live{border-radius:18px;background:rgba(138,180,248,.08);border:1px solid rgba(138,180,248,.15);padding:16px;min-height:80px;display:flex;align-items:center;}
+    .wx-loading{color:var(--muted);font-size:13px}
+    .wx-live-inner{width:100%}
+    .wx-city{font-size:12px;color:var(--blue);letter-spacing:.06em;margin-bottom:8px;}
+    .wx-main{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .wx-icon{font-size:32px;line-height:1}
+    .wx-temp{font-size:28px;font-weight:900;color:var(--text);}
+    .wx-desc{font-size:16px;color:var(--text)}
+    .wx-meta{font-size:12px;color:var(--blue);margin-top:8px}
+    .wx-forecast{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .wx-day{border-radius:14px;background:var(--panel2);border:1px solid var(--line);padding:10px 8px;text-align:center; transition: background .3s, border-color .3s;}
+    .wx-day:hover{background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.15);}
+    .wx-day-label{font-size:11px;font-weight:700;color:var(--text)}
+    .wx-day-date{font-size:10px;color:var(--muted);margin-bottom:6px}
+    .wx-day-icon{font-size:22px;margin:4px 0}
+    .wx-day-weather{font-size:11px;color:var(--muted);margin-bottom:4px}
+    .wx-day-temp{font-size:12px;font-weight:700;color:var(--text)}
+    .wx-note{font-size:11px;color:#888;text-align:center;padding:4px}
+
     @media (max-width: 980px){
       .hero,.grid2,.grid3,.food-grid{grid-template-columns:1fr}
       .wrap{padding-top:16px}
@@ -185,52 +273,82 @@
     .route-modes{display:flex;gap:8px;flex-wrap:wrap}
     .mode-tab{
       padding:9px 14px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;
-      border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#eaf1ff;
-      transition:background .2s,border-color .2s;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);
+      transition:all .3s ease;
     }
-    .mode-tab.active{background:rgba(143,230,194,.2);border-color:rgba(143,230,194,.5);color:#dff8ee}
-    .mode-tab:hover:not(.active){background:rgba(255,255,255,.12)}
+    .mode-tab.active{
+      background:rgba(129,199,132,.14);
+      border-color:var(--green);
+      color:var(--text);
+      box-shadow:0 0 14px rgba(129,199,132,.18);
+    }
+    .mode-tab:hover:not(.active){
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.2);
+      color:var(--text);
+    }
     .segment-controls{
       display:none;align-items:center;gap:8px;flex-wrap:wrap;
       padding:6px 10px;border-radius:12px;
-      background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);
+      background:var(--panel2);border:1px solid var(--line);
     }
-    .segment-label{font-size:12px;color:#d7e6ff}
+    .segment-label{font-size:12px;color:var(--muted)}
     .segment-btn{
       padding:6px 10px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer;
-      border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);color:#eef4ff;
+      border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);
+      transition:all .2s;
+    }
+    .segment-btn:hover:not(:disabled){
+      border-color: var(--blue);
+      color: var(--blue);
+      background:rgba(138,180,248,.10);
     }
     .segment-btn:disabled{
-      opacity:.45;cursor:not-allowed;
+      opacity:.3;cursor:not-allowed;border-color:rgba(255,255,255,.05);
     }
     .day-tabs{display:flex;gap:8px;flex-wrap:wrap}
     .day-tab{
       padding:9px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;
-      border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#eaf1ff;
-      transition:background .2s,border-color .2s;
+      border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--muted);
+      transition:all .3s ease;
     }
-    .day-tab.active{background:rgba(140,180,255,.25);border-color:rgba(140,180,255,.5);color:#cfe0ff}
-    .day-tab:hover:not(.active){background:rgba(255,255,255,.12)}
+    .day-tab.active{
+      background:rgba(138,180,248,.15);
+      border-color:var(--blue);
+      color:var(--text);
+      box-shadow:0 0 14px rgba(138,180,248,.16);
+    }
+    .day-tab:hover:not(.active){
+      background:rgba(255,255,255,.08);
+      border-color:rgba(255,255,255,.2);
+      color:var(--text);
+    }
     .nav-jump{
       text-decoration:none;
       border-radius:999px;
       font-size:13px;
       font-weight:700;
       padding:10px 14px;
-      color:#102038;
-      background:linear-gradient(135deg,#ffd38a,#8fe6c2);
-      border:1px solid rgba(255,255,255,.35);
-      box-shadow:0 8px 20px rgba(0,0,0,.22);
-      transition:transform .2s ease, box-shadow .2s ease;
+      color:#e5edf9;
+      background:linear-gradient(135deg, rgba(20,24,30,.92), rgba(34,40,48,.88));
+      border:1px solid rgba(138,180,248,.34);
+      box-shadow:0 2px 6px rgba(0,0,0,.24),0 0 14px rgba(138,180,248,.14);
+      transition:all .3s ease;
     }
     .nav-jump:hover{
       transform:translateY(-1px);
-      box-shadow:0 12px 24px rgba(0,0,0,.28);
+      box-shadow:0 6px 14px rgba(0,0,0,.32),0 0 18px rgba(138,180,248,.2);
+      border-color:rgba(138,180,248,.5);
     }
     #amap-container{
       width:100%;height:480px;border-radius:16px;overflow:hidden;
-      border:1px solid rgba(255,255,255,.1);
-      background:#0f172a;
+      border:1px solid var(--line);
+      background:#121417;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+    html[data-theme="smoke"] #amap-container{
+      border-color:var(--line);
+      background:#171a1f;
     }
     .map-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px}
     .legend-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
@@ -238,28 +356,54 @@
     .map-note{
       margin-top:10px;
       font-size:12px;
-      color:#b8c9ea;
+      color:var(--muted);
       opacity:.92;
     }
     .route-status{
       margin-top:10px;
       font-size:13px;
-      color:#d9e7ff;
+      color:var(--blue);
+      text-shadow:0 0 8px rgba(138,180,248,.14);
     }
+    html[data-theme="smoke"] .map-note{color:var(--muted)}
+    html[data-theme="smoke"] .route-status{color:var(--blue)}
     .amap-pin{
       display:flex;align-items:center;justify-content:center;
       width:30px;height:30px;border-radius:50%;font-size:13px;
-      box-shadow:0 2px 10px rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.25);
+      box-shadow:0 6px 12px rgba(0,0,0,.4);
+      border:2px solid rgba(255,255,255,.3);
       cursor:default;
+      color:#fff;text-shadow:0 0 2px rgba(0,0,0,.8);
     }
     .amap-label{
       position:absolute;left:34px;top:50%;transform:translateY(-50%);
-      background:rgba(10,16,32,.85);backdrop-filter:blur(8px);
-      border:1px solid rgba(255,255,255,.14);border-radius:10px;
-      padding:5px 10px;font-size:12px;color:#eef4ff;white-space:nowrap;
+      background:rgba(20,22,26,.84);backdrop-filter:blur(12px);
+      border:1px solid var(--line);border-radius:10px;
+      padding:5px 10px;font-size:12px;color:var(--text);white-space:nowrap;
       pointer-events:none;
+      box-shadow:0 10px 20px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.04);
+    }
+    html[data-theme="smoke"] .amap-label{
+      background:rgba(38,42,50,.84);
     }
     .amap-wrapper{position:relative;display:inline-flex;align-items:center}
+    
+    /* ── 雷达加餐 ── */
+    .radar-list { display: grid; gap: 10px; margin-top: 14px; }
+    .radar-item {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px; border-radius: 14px;
+      background: var(--panel2); border: 1px solid var(--line);
+      transition: background .2s, transform .2s;
+    }
+    .radar-item:hover { background: rgba(255,255,255,.06); transform: scale(1.01); }
+    .radar-info h4 { margin: 0 0 6px; font-size: 15px; color: var(--text); font-weight: 700; }
+    .radar-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .radar-tag { font-size: 11px; padding: 3px 6px; border-radius: 6px; background: rgba(255,255,255,.08); color: var(--muted); }
+    .radar-dist { font-size: 18px; font-weight: 900; color: var(--blue); white-space: nowrap; }
+    .radar-dist.near { color: var(--green); }
+    .radar-dist.far { color: var(--orange); }
+
     @media (max-width:980px){
       #amap-container{height:340px}
       .hero-main{padding:22px}
@@ -276,23 +420,23 @@
       <a href="#day2">3月15日</a>
       <a href="#day3">3月16日</a>
       <a href="#food">吃的清单</a>
-      <a href="#comments">留言区</a>
       <a href="#map-section">路线地图</a>
+      <a href="#radar-card" style="color: var(--primary);">加餐雷达</a>
     </nav>
 
     <section class="hero" id="overview">
       <div class="hero-main card">
         <h1>徐州三天两晚<br>吃玩顺路版攻略</h1>
         <p class="sub">
-          去程：3 月 14 日 G986，07:05 上海站出发，抵达徐州东。返程：3 月 16 日 G8269，17:10 徐州东站出发回上海。<br>
-          酒店按「徐州云龙万达广场漫心酒店」来排，路线尽量往云龙万达、民富园、津浦东路这一侧收，夜里回酒店更顺。两晚都留烧烤，第一晚主打鬼王，第二晚按酒店回程线安排方方 / 朱家 / 袁姐候选池。
+          🚄 去程：3月14日 07:05 (上海-徐州东 G986)<br>
+          🚄 回程：3月16日 17:10 (徐州东-上海 G8269)<br><br>
+          🏨 盲排了「云龙万达漫心酒店」。路线重点：晚上吃完烧烤回酒店巨顺路！连吃两晚烧烤，第一晚主冲“鬼王”，第二晚给大家挑了几家离酒店近的，可以随心挑！
         </p>
         <div class="badges">
           <span class="badge">按天气排</span>
           <span class="badge">避开周一闭馆</span>
           <span class="badge">两晚都留烧烤</span>
           <span class="badge">酒店在云龙万达附近</span>
-          <span class="badge">留言授权码 517</span>
         </div>
         <div class="cover-art" role="img" aria-label="徐州3天2夜旅行封面图">
           <div class="cover-kicker">XUZHOU CITY MAP</div>
@@ -307,16 +451,16 @@
       </div>
       <div class="hero-side card">
         <div class="mini">
-          <h3>这次更新了什么</h3>
-          <p>把四家夜宵烧烤都放进来了：朱家烧烤（民富园店）、小超烧烤（开元路店）、幸福路方方烧烤、袁姐烧烤（津浦东路店）。夜宵不再只写"候选"，而是直接塞进两晚安排里。</p>
+          <h3>🍗 烧烤全安排上了！</h3>
+          <p>朱家、小超、方方、袁姐这四家全放进来啦！不再只是"备胎"，这两晚我都给你们排得明明白白的。</p>
         </div>
         <div class="mini">
-          <h3>四个人最舒服的吃法</h3>
-          <p>不是每顿只盯一家，而是"一顿正式主餐 + 一家小店补味道"，或者"晚上先吃正餐、回酒店前再补夜宵烧烤"。阿兰油烫鸭就按这个思路处理，点一份尝味就够。</p>
+          <h3>👯 四人局怎么吃最爽？</h3>
+          <p>别死磕一家！“正餐+小吃”组合拳才是王道。吃完正餐，回酒店路上顺手再撸点串。像阿兰油烫鸭，买一份大家分一分尝鲜刚合适！</p>
         </div>
         <div class="mini">
-          <h3>夜宵原则</h3>
-          <p>第一晚吃景点线附近的烧烤，不追求太绕；第二晚偏酒店回程线，优先方方烧烤，其次朱家 / 袁姐当第二回合，小超和老九放机动。</p>
+          <h3>🍻 夜宵不折腾指南</h3>
+          <p>第一晚就在景点附近吃，少跑路；第二晚挑离酒店近的，方方是首选，朱家/袁姐当备选项，开心最重要！</p>
         </div>
       </div>
     </section>
@@ -343,51 +487,48 @@
               <span id="segment-label" class="segment-label">第 1/1 段</span>
               <button type="button" id="segment-next" class="segment-btn">下一段</button>
             </div>
-            <a id="amap-nav-btn" class="nav-jump" href="https://uri.amap.com/navigation" target="_blank" rel="noopener noreferrer">打开全程导航</a>
+            <a id="amap-nav-btn" class="nav-jump" href="https://uri.amap.com/navigation" target="_blank" rel="noopener noreferrer" style="display: none;">打开导航</a>
           </div>
         </div>
         <div id="amap-container"></div>
         <div class="map-legend">
-          <div class="legend-item"><span class="legend-swatch" style="background:#8cb4ff"></span>Day 1｜到达 → 云龙湖云龙山线 → 鬼王烤翅</div>
-          <div class="legend-item"><span class="legend-swatch" style="background:#8fe6c2"></span>Day 2｜早餐 → 博物馆 → 把子肉/地锅鸡 → 夜宵</div>
-          <div class="legend-item"><span class="legend-swatch" style="background:#ffd38a"></span>Day 3｜返程日补漏 → 徐州东站</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#89a7e8;box-shadow:0 0 10px rgba(137,167,232,.28)"></span>Day 1｜到达 → 云龙湖云龙山线 → 鬼王烤翅 → 回酒店</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#7fbca0;box-shadow:0 0 10px rgba(127,188,160,.24)"></span>Day 2｜早餐 → 博物馆 → 把子肉/地锅鸡 → 夜宵 → 回酒店</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#cba675;box-shadow:0 0 10px rgba(203,166,117,.24)"></span>Day 3｜酒店出发补漏 → 徐州东站</div>
         </div>
         <div id="route-status" class="route-status">路线方式：开车（规划中）</div>
-        <div class="map-note">地图为行程示意，夜宵店最终选择请以「夜宵专项安排」和导航按钮为准。</div>
+        <div class="map-note">地图为行程示意，已加入“回酒店/酒店出发”段；酒店点位按云龙万达片区锚定，可按实际入住酒店微调。</div>
       </div>
     </section>
 
     <section class="section grid2">
       <div class="panel card">
-        <h2>路线总览</h2>
+        <h2>保姆级路线大放送</h2>
         <div class="route-line">
-          <span class="pill">Day 1：徐州东到店放行李 → 陈开武老味饣它汤 → 云龙湖+云龙山索道 → 阿喆米线 → 鬼王烤翅 + 冰粉/炸串</span>
-          <span class="pill">Day 2：恒香包子店 → 徐州博物馆 → 庆坤把子肉 → 百味地锅鸡 → 方方烧烤（朱家/袁姐/小超机动）</span>
-          <span class="pill">Day 3：陈家老味沓馍 → 郭际辣饼铺/阿兰油烫鸭补漏 → 提前去徐州东站返程</span>
+          <span class="pill">Day 1：徐州东到店放行李 → 陈开武老味饣它汤 → 云龙湖+云龙山索道 → 阿喆米线 → 鬼王烤翅 + 冰粉/炸串 → 回酒店</span>
+          <span class="pill">Day 2：恒香包子店 → 徐州博物馆 → 庆坤把子肉 → 百味地锅鸡 → 方方烧烤（朱家/袁姐/小超机动）→ 回酒店</span>
+          <span class="pill">Day 3：酒店出发 → 陈家老味沓馍 → 郭际辣饼铺/阿兰油烫鸭补漏 → 提前去徐州东站返程</span>
         </div>
         <div class="note" style="margin-top:14px">
-          <strong>为什么这样安排</strong>
-          <p style="margin:8px 0 0">核心逻辑是三件事：第一，周一闭馆的博物馆提前到 Day 2；第二，第一晚和第二晚都留烧烤，但分成“主场 + 机动第二回合”；第三，第二晚和返程日都优先照顾云龙万达回程线，减少夜里折返。</p>
+          <strong>💡 路线小心机</strong>
+          <p style="margin:8px 0 0">1. 因为周一博物馆不开门，所以放第二天去。<br>2. 两晚都有烧烤，一晚重头戏，一晚随便吃吃兜个底。<br>3. 晚上坚决不绕路！吃完就顺着万达方向回酒店，省下体力睡个好觉。</p>
         </div>
       </div>
       <div class="panel card">
-        <h2>天气与开放信息</h2>
+        <h2>出行避坑小提示</h2>
         <div class="boxlist">
-          <div class="box">
-            <h3>3 月 14 日</h3>
-            <p>多云，约 6–17°C，三天里最舒服，适合走云龙湖、云龙山、索道。</p>
+          <div class="wx-panel">
+            <div id="wx-live" class="wx-live"><span class="wx-loading">天气加载中…</span></div>
+            <div id="wx-forecast" class="wx-forecast"></div>
+            <div class="wx-note">📅 行程日 3/14–16 预报在出发前约 5 天内会出现在预报里</div>
           </div>
           <div class="box">
-            <h3>3 月 15 日</h3>
-            <p>云量减少，约 6–10°C，体感更凉，适合把室内的徐州博物馆放上午。</p>
+            <h3>🏛️ 徐州博物馆</h3>
+            <p>注意避坑周一不开门！平时9:00-17:00（下午4点后就不让进了），记得提前在手机实名预约哦。</p>
           </div>
           <div class="box">
-            <h3>徐州博物馆</h3>
-            <p>周二至周日 9:00–17:00，16:00 停止入馆；周一闭馆，通常需要实名预约。</p>
-          </div>
-          <div class="box">
-            <h3>云龙山索道</h3>
-            <p>冬季一般 9:00–17:00，建议别拖到太晚去坐。</p>
+            <h3>🚠 云龙山索道</h3>
+            <p>一般是9:00-17:00开放，尽量趁早，别等快天黑了再去排队哈。</p>
           </div>
         </div>
       </div>
@@ -397,21 +538,21 @@
       <div class="panel card">
         <h2>Day 1｜3 月 14 日 周六</h2>
         <div class="timeline">
-          <div class="step"><div class="dot blue">1</div><div><h3>徐州东 → 漫心万达放行李</h3><p>先去漫心万达放东西，轻装上阵。第一天别背着行李硬跑景点。</p><div class="why">到达日节奏松一点，后面玩起来更舒服。</div></div></div>
-          <div class="step"><div class="dot green">2</div><div><h3>早午饭：陈开武老味饣它汤</h3><p>点饣它汤 + 煎饺/煎包，直接吃徐州最有代表性的早餐。这个优先级高于魏记火烧。</p><div class="why">刚到城市先吃“城市记忆点”最强的东西，更值回票价。</div></div></div>
-          <div class="step"><div class="dot blue">3</div><div><h3>云龙湖</h3><p>吃完去云龙湖散步、拍照，湖边环境好，也不会太累。</p><div class="why">14 日温度最高，放户外最合理。</div></div></div>
-          <div class="step"><div class="dot orange">4</div><div><h3>云龙山 + 云龙山索道</h3><p>建议上山坐索道，或者反过来，看你当时排队情况。体力不想消耗太多就索道优先。</p><div class="why">云龙湖和云龙山本来就是一组，拆开玩反而浪费路程。</div></div></div>
-          <div class="step"><div class="dot green">5</div><div><h3>午后/偏晚午餐：云龙湖阿喆米线</h3><p>牛肉肉酱米线可以安排在湖边景点结束后，刚好顺路收口。</p><div class="why">它就在云龙湖板块，不用再回市区找饭。</div></div></div>
-          <div class="step"><div class="dot red">6</div><div><h3>第一晚正经烧烤：鬼王烤翅</h3><p>这家是你清单里综合最强的烧烤，招牌鬼王全翅优先，再按胃口补串。</p><div class="why">口碑和稳定度都比较靠前，适合当"徐州烧烤首秀"，情绪价值最高。</div></div></div>
-          <div class="step"><div class="dot orange">7</div><div><h3>夜宵加码：夏抱冰冰粉 / 建国炸串</h3><p>如果鬼王吃得比较重，就去冰粉降火；如果还想继续嗦一口，就去炸串补一轮。</p><div class="why">这两个都更适合做补刀，不建议单独占一餐。</div></div></div>
+          <div class="step"><div class="dot blue">1</div><div><h3>徐州东 → 漫心万达放行李</h3><p>到了先去漫心酒店丢行李，千万别背着包傻跑。</p><div class="why">咱们第一天悠着点，玩得才爽。</div></div></div>
+          <div class="step"><div class="dot green">2</div><div><h3>早午饭：陈开武老味饣它汤</h3><p>必点饣它汤 + 煎饺/煎包！直接搞定徐州最地道的过早，魏记火烧直接往后排！</p><div class="why">刚落地先吃点有特色的才够味嘛。</div></div></div>
+          <div class="step"><div class="dot blue">3</div><div><h3>云龙湖</h3><p>吃饱去湖边消个食、拍几张美照，风景好还不累脚。</p><div class="why">趁着14号天气最好，多在外面逛逛。</div></div></div>
+          <div class="step"><div class="dot orange">4</div><div><h3>云龙山 + 云龙山索道</h3><p>上去或下来坐一趟索道（看哪边排队短）。想偷懒不想爬的，首推索道。</p><div class="why">湖和山连着呢，一起玩顺手牵羊。</div></div></div>
+          <div class="step"><div class="dot green">5</div><div><h3>午后/偏晚午餐：云龙湖阿喆米线</h3><p>湖边逛完正好来碗牛肉肉酱米线，完美衔接。</p><div class="why">就在旁边，省得又饿又累地跑市区找吃的。</div></div></div>
+          <div class="step"><div class="dot red">6</div><div><h3>第一晚正经烧烤：鬼王烤翅</h3><p>算是综合实力最强的一家啦！先把招牌烤翅安排上，不够再加串。</p><div class="why">口碑超稳当，拿来当“徐州烧烤第一顿”绝对不亏。</div></div></div>
+          <div class="step"><div class="dot orange">7</div><div><h3>夜宵加码：夏抱冰冰粉 / 建国炸串</h3><p>烧烤吃太咸可以弄碗冰粉解解腻；要是意犹未尽，就去吃顿炸串续摊！</p><div class="why">这俩当小零食就好，别占大餐肚子哈。</div></div></div>
         </div>
       </div>
       <div class="panel card">
-        <h2>Day 1 为什么这样排</h2>
+        <h2>🤔 Day 1 为什么要这样排？</h2>
         <div class="boxlist">
-          <div class="box"><h3>先把户外景点清掉</h3><p>第一天最暖，湖、山、索道放一起最顺。</p></div>
-          <div class="box"><h3>第一晚就把"徐州烧烤"吃明白</h3><p>第一晚给鬼王，别一上来就分流太多店，不然会变成每家都只吃个影子。</p></div>
-          <div class="box"><h3>晚上仍然保留二段式</h3><p>四个人共享，烧烤后补冰粉或炸串，比一顿硬塞满更舒服。</p></div>
+          <div class="box"><h3>先把室外的玩了</h3><p>第一天天儿最好，把湖、山和索道打包玩，贼顺溜。</p></div>
+          <div class="box"><h3>第一晚直接吃爽烧烤</h3><p>直接认准鬼王这一家使劲吃，一上来别东吃一家西吃一家，搞得都不痛快。</p></div>
+          <div class="box"><h3>主餐和小吃打配合</h3><p>大家分着吃，吃完烤肉再去搞点冰粉炸串溜个缝儿，简直完美！</p></div>
         </div>
       </div>
     </section>
@@ -420,20 +561,20 @@
       <div class="panel card">
         <h2>Day 2｜3 月 15 日 周日</h2>
         <div class="timeline">
-          <div class="step"><div class="dot green">1</div><div><h3>早餐：恒香包子店</h3><p>辣汤 + 肉包，和前一天的饣它汤形成两种不同徐州早餐体验。</p><div class="why">两顿早餐一个是汤魂，一个是包子辣汤，搭配更完整。</div></div></div>
-          <div class="step"><div class="dot blue">2</div><div><h3>徐州博物馆</h3><p>建议上午去，节奏从容些，也更稳。记得提前预约。</p><div class="why">周一闭馆，所以必须在今天之前完成。</div></div></div>
-          <div class="step"><div class="dot orange">3</div><div><h3>午餐：庆坤东坡把子肉</h3><p>把子肉是徐州正餐代表，吃法和早餐风格完全不同，适合博物馆出来接一顿正经午饭。</p><div class="why">前一天晚上偏小吃，第二天中午该上一顿徐州硬菜了。</div></div></div>
-          <div class="step"><div class="dot red">4</div><div><h3>下午顺路尝味：阿兰油烫鸭 或 郭际辣饼铺</h3><p>阿兰油烫鸭建议四个人点一份尝味。郭际辣饼铺更像快餐型补位，看下午饿不饿决定。</p><div class="why">这两个都适合"顺路尝一下"，不是必须占一整顿饭。</div></div></div>
-          <div class="step"><div class="dot green">5</div><div><h3>晚餐：百味地锅鸡（二店，财校分店）</h3><p>这顿给四个人的正式晚餐，地锅鸡本来就适合多人一起吃，氛围和满足感都比小吃更强。</p><div class="why">这顿吃"踏实的大菜"，满足感更高。</div></div></div>
-          <div class="step"><div class="dot red">6</div><div><h3>第二晚夜宵：幸福路方方烧烤 → 朱家 / 袁姐 / 小超 备选</h3><p>如果晚饭后还想认真补一轮，优先去方方烧烤；如果只想顺手补几串再回酒店，朱家烧烤（民富园店）和袁姐烧烤（津浦东路店）更适合当第二回合。小超烧烤（开元路店）放机动位，状态好再去。</p><div class="why">第二晚按酒店回程线来排，把夜宵体验做出来，不跟第一晚抢戏。</div></div></div>
+          <div class="step"><div class="dot green">1</div><div><h3>早餐：恒香包子店</h3><p>辣汤配大肉包！跟昨天的饣它汤换个口味，体验不一样的过早。</p><div class="why">一天汤一天包子，齐活儿啦！</div></div></div>
+          <div class="step"><div class="dot blue">2</div><div><h3>徐州博物馆</h3><p>早上逛馆子比较闲适，别忘了提前在手机上预约进馆哈。</p><div class="why">明儿他们就放假闭馆啦，今天必须去！</div></div></div>
+          <div class="step"><div class="dot orange">3</div><div><h3>午餐：庆坤东坡把子肉</h3><p>来徐州怎么能不吃把子肉！逛完博物馆出来，吃顿把子肉大口干饭！</p><div class="why">前面一直在吃小吃，今天中午高低得整顿硬菜。</div></div></div>
+          <div class="step"><div class="dot red">4</div><div><h3>下午顺路尝味：阿兰油烫鸭 或 郭际辣饼铺</h3><p>油烫鸭买一份大家尝尝鲜就好。辣饼铺就看大家下午饿不饿，当零食吃。</p><div class="why">这俩就是路过垫吧肚子的神仙小吃~</div></div></div>
+          <div class="step"><div class="dot green">5</div><div><h3>晚餐：百味地锅鸡（二店，财校分店）</h3><p>四人局的重头戏！一帮人围着吃地锅鸡，那叫一个热闹满足！</p><div class="why">晚饭得吃点热腾腾的特色大餐嘛。</div></div></div>
+          <div class="step"><div class="dot red">6</div><div><h3>第二晚夜宵：幸福路方方烧烤 → 朱家 / 袁姐 / 小超 备选</h3><p>要是还能吃得下，就冲方方烧烤！如果只想顺口撸两串，回酒店路上的朱家或者袁姐更合适。小超就当随机应变的备胎啦。</p><div class="why">这晚主打一个离酒店近，吃撑了好回房躺下。</div></div></div>
         </div>
       </div>
       <div class="panel card">
-        <h2>Day 2 为什么这样排</h2>
+        <h2>🤔 Day 2 为什么要这样排？</h2>
         <div class="boxlist">
-          <div class="box"><h3>博物馆放凉一点的这天</h3><p>第二天更凉，上午去室内景点更舒服，然后把把子肉和地锅鸡接上，节奏很顺。</p></div>
-          <div class="box"><h3>正式晚餐和夜宵分开</h3><p>地锅鸡是主餐，烧烤是夜宵。这样不会出现"哪家都想吃，结果哪家都吃不痛快"。</p></div>
-          <div class="box"><h3>第二晚优先照顾回酒店顺路</h3><p>住在云龙万达，第二晚就让夜宵更像"回程补一轮"，而不是特意穿城追店。</p></div>
+          <div class="box"><h3>阴凉天钻博物馆</h3><p>第二天有点转凉，上午蹲室内正合适，出来顺路吃大餐！</p></div>
+          <div class="box"><h3>大餐夜宵不能混</h3><p>正经吃顿地锅鸡，再溜达去吃点烧烤夜宵，就不会搞出那种眼大肚子小的尴尬啦。</p></div>
+          <div class="box"><h3>夜宵回哪哪儿都近</h3><p>就找回万达酒店顺路的店，坚决不再折腾大半个城去凑热闹。</p></div>
         </div>
       </div>
     </section>
@@ -442,109 +583,109 @@
       <div class="panel card">
         <h2>Day 3｜3 月 16 日 周一</h2>
         <div class="timeline">
-          <div class="step"><div class="dot green">1</div><div><h3>早餐：陈家老味沓馍（王陵大院店）</h3><p>第三天吃轻一点，沓馍比硬上大菜更合适。要是强烈想补本地早点，也可以改成魏记火烧。</p><div class="why">这天是返程日，最适合补漏，不适合开新大项目。</div></div></div>
-          <div class="step"><div class="dot orange">2</div><div><h3>午前补漏：郭际辣饼铺 / 阿兰油烫鸭</h3><p>前两天没吃到哪个，这天补一个最合适。阿兰依旧只建议点一份尝味。</p><div class="why">周一博物馆不开，这天本来就是弹性收尾位。</div></div></div>
-          <div class="step"><div class="dot blue">3</div><div><h3>提前去徐州东站，17:10 返程</h3><p>不要把最后一顿吃太满，留出去徐州东的时间和体力，轻轻松松结束。</p><div class="why">最后一天最怕赶车，宁可少吃一口，也别把自己搞得狼狈。</div></div></div>
+          <div class="step"><div class="dot green">1</div><div><h3>早餐：陈家老味沓馍（王陵大院店）</h3><p>最后一天垫个肚子就行，沓馍超棒。要是实在惦记，也可以去吃魏记火烧过过干瘾。</p><div class="why">今天要回家啦，随意吃吃当收尾最好。</div></div></div>
+          <div class="step"><div class="dot orange">2</div><div><h3>午前补漏：郭际辣饼铺 / 阿兰油烫鸭</h3><p>前边儿错过的今天补上！阿兰的话按老规矩，全家买一份分着吃就好。</p><div class="why">今天很freestyle，想凑啥就凑啥~</div></div></div>
+          <div class="step"><div class="dot blue">3</div><div><h3>提前去徐州东站，17:10 返程</h3><p>大家悠着点肚子，提前点动身去高铁站，轻轻松松打道回府！</p><div class="why">回程就不慌里慌张踩点啦，优雅点结束~</div></div></div>
         </div>
       </div>
       <div class="panel card">
-        <h2>Day 3 为什么这样排</h2>
+        <h2>🤔 Day 3 为什么要这样排？</h2>
         <div class="boxlist">
-          <div class="box"><h3>周一不碰博物馆</h3><p>这天只做补漏，不再安排必须打卡的景点。</p></div>
-          <div class="box"><h3>把小店放最后一天最灵活</h3><p>陈家老味沓馍、郭际辣饼铺、阿兰油烫鸭这类，都适合最后一天看状态补上。</p></div>
-          <div class="box"><h3>不建议硬塞太多</h3><p>返程日本来就容易累，不安排重头景点，轻松结束最好。</p></div>
+          <div class="box"><h3>周一博物馆关门大吉</h3><p>今天没硬指标，纯纯的查漏补缺局。</p></div>
+          <div class="box"><h3>小店留着兜底</h3><p>沓馍鸭子辣饼就留给最后一天，走到哪算哪、吃到哪算哪。</p></div>
+          <div class="box"><h3>拒绝特种兵式赶路</h3><p>打道回府的一天，坚决不安排大活儿，大家都轻松走人。</p></div>
         </div>
       </div>
     </section>
 
     <section class="section" id="food">
       <div class="panel card">
-        <h2>吃的清单｜分类 + 建议级别</h2>
+        <h2>老饕美食黑榜/红榜大公开</h2>
         <div class="food-grid">
           <div class="food-card">
             <h3>恒香包子店</h3>
             <div class="tags"><span class="tag">早餐</span><span class="tag">¥10</span><span class="tag">3.8</span><span class="tag good">推荐</span></div>
-            <p>辣汤 + 肉包是经典搭配，作为徐州地道早餐很稳。适合安排在 Day 2 早上。</p>
+            <p>辣汤配肉包绝了！徐州老牌过早神仙吃法，放第二天吃它准没错。</p>
           </div>
           <div class="food-card">
             <h3>陈开武老味饣它汤</h3>
             <div class="tags"><span class="tag">早餐</span><span class="tag">¥12</span><span class="tag">3.9</span><span class="tag good">强烈推荐</span></div>
-            <p>饣它汤 + 煎饺/煎包很有代表性，算徐州早餐灵魂，优先级很高。</p>
+            <p>徐州早餐里的灵魂人物！饣它汤加煎包煎饺，必吃榜No.1！</p>
           </div>
           <div class="food-card">
             <h3>魏记火烧</h3>
             <div class="tags"><span class="tag">早餐/加餐</span><span class="tag">¥13</span><span class="tag">3.5</span><span class="tag no">候补</span></div>
-            <p>牛肉火烧、羊肉火烧可以尝鲜，但评分偏一般，不建议专门跑一趟。</p>
+            <p>牛羊肉火烧可买来尝个味，但不值当为了它跑个远路哦。</p>
           </div>
           <div class="food-card">
             <h3>庆坤东坡把子肉</h3>
             <div class="tags"><span class="tag">午/晚餐</span><span class="tag">¥29</span><span class="tag">4.3</span><span class="tag good">推荐</span></div>
-            <p>把子肉是正儿八经的徐州代表菜，适合放在博物馆后的午餐。</p>
+            <p>徐州硬菜代表，逛完博物馆累了，正好造顿把子肉来补补。</p>
           </div>
           <div class="food-card">
             <h3>百味地锅鸡（二店）</h3>
             <div class="tags"><span class="tag">晚餐</span><span class="tag">多人</span><span class="tag good">强烈推荐</span></div>
-            <p>地锅鸡本来就适合多人一起吃，四个人点一锅，氛围和满足感都强。第二天晚餐主线。</p>
+            <p>第二天晚饭大明星！四大金刚点一锅刚好，热热闹闹特别香。</p>
           </div>
           <div class="food-card">
             <h3>云龙湖阿喆米线</h3>
             <div class="tags"><span class="tag">午餐</span><span class="tag">¥25</span><span class="tag">4.0</span><span class="tag good">推荐</span></div>
-            <p>牛肉肉酱米线适合和云龙湖板块绑一起，路线最顺。</p>
+            <p>这碗肉酱米线就绝妙在跟湖区绑捆一起，顺路溜达去吃不费劲儿。</p>
           </div>
           <div class="food-card">
             <h3>鬼王烤翅</h3>
             <div class="tags"><span class="tag">晚餐/夜宵</span><span class="tag">¥27</span><span class="tag">4.4</span><span class="tag good">强烈推荐</span></div>
-            <p>这份清单里综合最能打的一家，第一晚吃最合适。</p>
+            <p>本次行程里实力超绝的扛把子烧烤！第一天晚上干饭首选。</p>
           </div>
           <div class="food-card">
             <h3>老九烧烤</h3>
             <div class="tags"><span class="tag">晚餐/夜宵</span><span class="tag">¥55</span><span class="tag ok">机动位</span></div>
-            <p>现在作为第二晚夜宵机动候选。状态好、顺路的话可以去；不专门为它绕路。</p>
+            <p>当成备用夜宵就好。刚好路过而且吃得下就去，别指望它特地跑一趟。</p>
           </div>
           <div class="food-card">
             <h3>阿兰油烫鸭</h3>
             <div class="tags"><span class="tag">晚餐/小吃</span><span class="tag">¥23</span><span class="tag">4.3</span><span class="tag good">推荐</span></div>
-            <p>油烫鸭很有本地小吃气质，适合第二天晚餐或返程前补吃。</p>
+            <p>本土特色小吃代表，第二天或回家前搞一只解解馋老灵了。</p>
           </div>
           <div class="food-card">
             <h3>建国炸串</h3>
             <div class="tags"><span class="tag">加餐/夜宵</span><span class="tag">¥24</span><span class="tag">4.0</span><span class="tag ok">可加</span></div>
-            <p>老徐州炸串味道不错，但更适合当补充，不建议独占一餐。</p>
+            <p>老牌炸串味道在线，不过就是个零食，别拿它当顿正经饭哈。</p>
           </div>
           <div class="food-card">
             <h3>夏抱冰冰粉</h3>
             <div class="tags"><span class="tag">甜品</span><span class="tag">¥15</span><span class="tag">4.0</span><span class="tag good">推荐</span></div>
-            <p>吃完重口味后非常适合解腻，旅行里留一口给它是值得的。</p>
+            <p>烧烤大肉之后的解腻神器，必须留点肚子尝尝它家的冰粉。</p>
           </div>
           <div class="food-card">
             <h3>幸福路方方烧烤</h3>
             <div class="tags"><span class="tag">晚餐/夜宵</span><span class="tag good">强烈推荐</span></div>
-            <p>第二晚夜宵首选。适合认真坐下来再冲一轮，离酒店回程方向顺。</p>
+            <p>第二天夜宵头牌！离酒店近，适合想再痛快撸一顿烧烤的各位。</p>
           </div>
           <div class="food-card">
             <h3>朱家烧烤（民富园店）</h3>
             <div class="tags"><span class="tag">夜宵</span><span class="tag ok">第二回合</span></div>
-            <p>第二晚夜宵第二候选。更适合"晚饭后顺手补几串再回酒店"，近万达方向。</p>
+            <p>二号备胎选手~ 吃完正餐顺道塞两串然后就可以回万达躺平了。</p>
           </div>
           <div class="food-card">
             <h3>袁姐烧烤（津浦东路店）</h3>
             <div class="tags"><span class="tag">夜宵</span><span class="tag ok">第二回合</span></div>
-            <p>第二晚夜宵第二候选（和朱家二选一）。津浦东路店回酒店方向顺。</p>
+            <p>同样是备胎二号（和朱家随便挑），离回酒店方向也很顺。</p>
           </div>
           <div class="food-card">
             <h3>小超烧烤（开元路店）</h3>
             <div class="tags"><span class="tag">夜宵</span><span class="tag ok">机动位</span></div>
-            <p>第二晚夜宵机动位。状态好、顺路再去，不专门为它绕路。</p>
+            <p>纯纯的替补。看心情跟腿脚，顺路顺嘴就吃，不用跋山涉水去。</p>
           </div>
           <div class="food-card">
             <h3>郭际辣饼铺</h3>
             <div class="tags"><span class="tag">小吃/加餐</span><span class="tag ok">顺路加</span></div>
-            <p>快餐型补位，适合下午饿的时候顺路嗦一口，不占一整顿饭。</p>
+            <p>拿来下午垫肚子用，路过随手来张饼就行。</p>
           </div>
           <div class="food-card">
             <h3>陈家老味沓馍（王陵大院店）</h3>
             <div class="tags"><span class="tag">早餐</span><span class="tag ok">Day 3</span></div>
-            <p>第三天早餐选项，比较轻，适合返程日吃个本地早点收尾。</p>
+            <p>走之前早上随便来口清淡点的，拿它打发胃没毛病。</p>
           </div>
         </div>
       </div>
@@ -552,7 +693,7 @@
 
     <section class="section grid2">
       <div class="panel card">
-        <h2>夜宵专项安排</h2>
+        <h2>夜宵吃什么·速查表</h2>
         <div class="boxlist">
           <div class="box">
             <h3>第一晚</h3>
@@ -565,124 +706,49 @@
         </div>
       </div>
       <div class="panel card">
-        <h2>备注</h2>
+        <h2>✍️ 贴心碎碎念</h2>
         <div class="box">
-          <p>酒店按「徐州云龙万达广场漫心酒店，和平大道提香湾 27 号楼，近万达广场，距徐州东站约 4.3 公里」来理解。幸福路方方烧烤标注在云龙万达 / 宝莲寺片区；朱家烧烤（民富园店）地址指向德政南路、东苑农贸市场斜对面。这个版本因此把第二晚夜宵往酒店附近一侧收。若你最后住的不是这家漫心，可以再调整。</p>
+          <p>酒店默认定的是【云龙万达漫心酒店】哈！所以方方、朱家烧烤都是给你们算过距离挑的最近的，主打回家方便不绕路。万一你们定了别的店，回头再微调也行。</p>
         </div>
       </div>
     </section>
 
-    <section class="section grid2">
+    <section class="section">
+      <div class="panel card" id="radar-card">
+        <h2>📍 附近加餐雷达</h2>
+        <div style="margin-bottom: 12px; font-size: 14px; color: var(--text-sec);">
+          获取当前位置，计算所有备选好店的距离（直线距离）。
+        </div>
+        <div class="radar-controls">
+          <button class="nav-jump" id="radar-refresh-btn" onclick="refreshRadar()" style="cursor:pointer; display:inline-block; margin-bottom: 8px;">看看附近</button>
+        </div>
+        <div id="radar-list" class="radar-list">
+          <div class="radar-item" style="justify-content:center;">
+            <span class="radar-info">点击上方按钮获取附近推荐...</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
       <div class="panel card">
-        <h2>一句话结论</h2>
+        <h2>💡 抄作业版省流总结</h2>
         <table class="summary-table">
           <thead>
             <tr><th>级别</th><th>店铺</th><th>建议</th></tr>
           </thead>
           <tbody>
-            <tr><td>一定要去</td><td>陈开武老味饣它汤、恒香包子店、庆坤东坡把子肉、鬼王烤翅、百味地锅鸡</td><td>这几家最能构成徐州这趟的"记忆点"。</td></tr>
-            <tr><td>第二晚夜宵首选</td><td>幸福路方方烧烤</td><td>适合认真再坐下来冲一轮，离酒店方向顺。</td></tr>
-            <tr><td>顺路很适合</td><td>云龙湖阿喆米线、阿兰油烫鸭、夏抱冰冰粉、郭际辣饼铺、陈家老味沓馍、建国炸串</td><td>安排得好会很顺，不用单独绕路。</td></tr>
-            <tr><td>夜宵第二回合</td><td>朱家烧烤（民富园店）、袁姐烧烤（津浦东路店）</td><td>晚饭后顺手补几串再回酒店，更像"第二回合"。</td></tr>
-            <tr><td>机动位</td><td>小超烧烤（开元路店）、老九烧烤</td><td>状态好顺路就去，不专门绕路。</td></tr>
-            <tr><td>最先舍弃</td><td>魏记火烧</td><td>分数和必要性都没高到要硬安排。</td></tr>
+            <tr><td>一定要去</td><td>陈开武老味饣它汤、恒香包子店、庆坤东坡把子肉、鬼王烤翅、百味地锅鸡</td><td>来徐州必吃的灵魂美味！绝不踩雷！</td></tr>
+            <tr><td>第二晚夜宵首选</td><td>幸福路方方烧烤</td><td>离酒店超近，想再来顿正经烧烤选它准没错。</td></tr>
+            <tr><td>顺路很适合</td><td>云龙湖阿喆米线、阿兰油烫鸭、夏抱冰冰粉、郭际辣饼铺、陈家老味沓馍、建国炸串</td><td>千万别特地飞奔过去，顺着路线吃最最惬意。</td></tr>
+            <tr><td>夜宵第二回合</td><td>朱家烧烤（民富园店）、袁姐烧烤（津浦东路店）</td><td>饭后小零食属性，顺手吃两串直接回房睡觉了。</td></tr>
+            <tr><td>机动位</td><td>小超烧烤（开元路店）、老九烧烤</td><td>有缘路过就吃，一切看心情啦。</td></tr>
+            <tr><td>最先舍弃</td><td>魏记火烧</td><td>不用死磕，随缘！这俩不是必须要冲的。</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="panel card" id="comments">
-        <h2>留言建议区</h2>
-        <p class="meta">输入授权码 <strong>517</strong> 才能提交留言。留言会显示在当前网页中，适合发布展示和收集建议。</p>
-        <div class="comment-box">
-          <div>
-            <label for="nickname">昵称</label>
-            <input id="nickname" placeholder="比如：徐州本地通" />
-          </div>
-          <div>
-            <label for="code">授权码</label>
-            <input id="code" placeholder="请输入授权码" />
-          </div>
-          <div>
-            <label for="comment">建议内容</label>
-            <textarea id="comment" placeholder="比如：第二晚更推荐哪家烧烤？方方和朱家要不要对调？"></textarea>
-          </div>
-          <button id="submitBtn">提交留言</button>
-        </div>
-        <div id="commentsList" style="margin-top:16px;display:grid;gap:12px"></div>
-      </div>
     </section>
-
-    <div class="footer">
-      本页适合直接发布分享。说明：留言功能基于浏览器本地存储，同一浏览器里可持续显示；如果后面想做成所有访客都能看到同一批留言的正式评论区，需要接入后端数据库。<br>
-      天气信息与开放时间请在出发前再确认，景区与场馆公告可能有临时调整。
-    </div>
   </div>
-
-  <script>
-    const AUTH_CODE = '517';
-    const STORAGE_KEY = 'xuzhou_trip_comments_v4';
-    const defaultComments = [
-      {name:'游客@小鹿', text:'第二晚如果地锅鸡吃太饱，烧烤就少点几串意思一下，别把自己吃翻车了。', time:'2026-03-08 20:10'},
-      {name:'游客@本地胃', text:'方方烧烤适合认真坐下来再吃一轮，朱家和袁姐更像回程补几串。', time:'2026-03-08 20:18'}
-    ];
-
-    function getComments(){
-      try{
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if(Array.isArray(saved) && saved.length) return saved;
-      }catch(e){}
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultComments));
-      return defaultComments;
-    }
-
-    function renderComments(){
-      const list = document.getElementById('commentsList');
-      const comments = getComments();
-      list.innerHTML = comments.map(item => `
-        <div class="comment-item">
-          <strong>${escapeHtml(item.name)}</strong>
-          <div class="comment-meta">${escapeHtml(item.time)}</div>
-          <div>${escapeHtml(item.text)}</div>
-        </div>
-      `).join('');
-    }
-
-    function escapeHtml(str){
-      return String(str)
-        .replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;')
-        .replace(/'/g,'&#39;');
-    }
-
-    document.getElementById('submitBtn').addEventListener('click', () => {
-      const name = document.getElementById('nickname').value.trim() || '匿名游客';
-      const code = document.getElementById('code').value.trim();
-      const text = document.getElementById('comment').value.trim();
-
-      if(code !== AUTH_CODE){
-        alert('授权码不对，请输入 517。');
-        return;
-      }
-      if(!text){
-        alert('请先写点建议再提交。');
-        return;
-      }
-
-      const comments = getComments();
-      comments.unshift({
-        name,
-        text,
-        time: new Date().toLocaleString('zh-CN')
-      });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
-      document.getElementById('comment').value = '';
-      document.getElementById('code').value = '';
-      renderComments();
-    });
-
-    renderComments();
-  </script>
 
   <!-- 高德地图 JS API v2.0 -->
   <script>
@@ -696,7 +762,7 @@
     /* ── 行程坐标 ── */
     const tripDays = {
       1: {
-        color: '#8cb4ff',
+        color: '#89a7e8',
         points: [
           { pos: [117.2077, 34.2717], name: '徐州东站',       icon: '🚄' },
           { pos: [117.1856, 34.2608], name: '陈开武饣它汤',   icon: '🍜' },
@@ -704,10 +770,11 @@
           { pos: [117.1977, 34.2420], name: '云龙山·索道',    icon: '⛰️' },
           { pos: [117.1958, 34.2302], name: '阿喆米线',       icon: '🍝' },
           { pos: [117.1834, 34.2638], name: '鬼王烤翅',       icon: '🍗' },
+          { pos: [117.2384, 34.2533], name: '漫心酒店(回酒店)', icon: '🏨' },
         ]
       },
       2: {
-        color: '#8fe6c2',
+        color: '#7fbca0',
         points: [
           { pos: [117.1788, 34.2643], name: '恒香包子店',     icon: '🥟' },
           { pos: [117.1807, 34.2648], name: '徐州博物馆',     icon: '🏛️' },
@@ -715,11 +782,13 @@
           { pos: [117.1812, 34.2671], name: '阿兰油烫鸭尝味', icon: '🦆' },
           { pos: [117.1748, 34.2601], name: '百味地锅鸡',     icon: '🍲' },
           { pos: [117.1882, 34.2572], name: '方方烧烤(夜宵)', icon: '🔥' },
+          { pos: [117.2384, 34.2533], name: '漫心酒店(回酒店)', icon: '🏨' },
         ]
       },
       3: {
-        color: '#ffd38a',
+        color: '#cba675',
         points: [
+          { pos: [117.2384, 34.2533], name: '漫心酒店(出发)',   icon: '🏨' },
           { pos: [117.1860, 34.2718], name: '陈家老味沓馍',   icon: '🥙' },
           { pos: [117.1812, 34.2671], name: '郭际辣饼/阿兰补漏', icon: '🌶️' },
           { pos: [117.2077, 34.2717], name: '徐州东站返程',   icon: '🚄' },
@@ -736,10 +805,23 @@
     let routeRequestSeq = 0;
     const routeServices = { driving: null, walking: null, transit: null };
     const routeModeLabel = { driving: '开车', transit: '公交', walking: '步行' };
+    const rootEl = document.documentElement;
+    const systemThemeMedia = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    let currentTheme = rootEl.getAttribute('data-theme') === 'night' ? 'night' : 'smoke';
+
+    function getMapStyleByTheme(theme) {
+      return 'amap://styles/dark';
+    }
+
+    function applySystemTheme() {
+      currentTheme = systemThemeMedia && systemThemeMedia.matches ? 'night' : 'smoke';
+      rootEl.setAttribute('data-theme', currentTheme);
+      if (amapInst) amapInst.setMapStyle(getMapStyleByTheme(currentTheme));
+    }
 
     function makePinHtml(color, icon, name) {
       return `<div class="amap-wrapper">
-        <div class="amap-pin" style="background:${color}22;border-color:${color}">${icon}</div>
+        <div class="amap-pin" style="background:${color}22;border-color:${color};box-shadow:0 0 0 1px ${color}55,0 6px 14px rgba(0,0,0,.45),0 0 14px ${color}33">${icon}</div>
         <div class="amap-label">${name}</div>
       </div>`;
     }
@@ -756,8 +838,8 @@
         const polyline = new AMap.Polyline({
           path: data.points.map(p => p.pos),
           strokeColor: data.color,
-          strokeWeight: 3,
-          strokeOpacity: 0.85,
+          strokeWeight: 3.2,
+          strokeOpacity: 0.9,
           strokeDasharray: [8, 5],
           lineJoin: 'round',
           lineCap: 'round',
@@ -934,11 +1016,14 @@
       const route = getNavEndpoints(day);
       navBtn.href = buildNavUrl(day);
       if (day === 'all') {
-        navBtn.textContent = '打开全程导航';
-      } else if (route && route.segmentTotal) {
-        navBtn.textContent = `导航第 ${route.segmentIndex} 段`;
+        navBtn.style.display = 'none';
       } else {
-        navBtn.textContent = `打开 Day ${day} 导航`;
+        navBtn.style.display = 'inline-block';
+        if (route && route.segmentTotal) {
+          navBtn.textContent = `导航第 ${route.segmentIndex} 段`;
+        } else {
+          navBtn.textContent = `打开 Day ${day} 导航`;
+        }
       }
       if (route) {
         navBtn.title = `${route.start.name} → ${route.end.name}`;
@@ -962,7 +1047,7 @@
       amapInst = new AMap.Map('amap-container', {
         zoom: 13,
         center: [117.192, 34.252],
-        mapStyle: 'amap://styles/dark',
+        mapStyle: getMapStyleByTheme(currentTheme),
       });
       buildOverlays(amapInst);
       updateSegmentControls('all');
@@ -971,6 +1056,58 @@
       amapInst.on('complete', () => {
         setTimeout(() => amapInst.setFitView(null, false, [50, 50, 50, 50]), 300);
       });
+
+      // ── 天气 ──
+      function wxIcon(w) {
+        if (/晴/.test(w))   return '☀️';
+        if (/多云/.test(w)) return '⛅';
+        if (/阴/.test(w))   return '☁️';
+        if (/雷/.test(w))   return '⛈️';
+        if (/雨/.test(w))   return '🌧️';
+        if (/雪/.test(w))   return '❄️';
+        if (/雾|霾/.test(w))return '🌫️';
+        if (/风/.test(w))   return '💨';
+        return '🌡️';
+      }
+      AMap.plugin('AMap.Weather', function() {
+        const weather = new AMap.Weather();
+        weather.getLive('徐州', function(err, data) {
+          const el = document.getElementById('wx-live');
+          if (err || !data) { el.innerHTML = '<span class="wx-loading">天气暂时获取不到，出发前在高德地图查一下</span>'; return; }
+          el.innerHTML = `
+            <div class="wx-live-inner">
+              <div class="wx-city">徐州 · 当前天气</div>
+              <div class="wx-main">
+                <span class="wx-icon">${wxIcon(data.weather)}</span>
+                <span class="wx-temp">${data.temperature}°C</span>
+                <span class="wx-desc">${data.weather}</span>
+              </div>
+              <div class="wx-meta">${data.windDirection}风 ${data.windPower}级 · 湿度 ${data.humidity}% · ${data.reportTime.slice(11,16)} 更新</div>
+            </div>`;
+        });
+        weather.getForecast('徐州', function(err, data) {
+          const el = document.getElementById('wx-forecast');
+          if (err || !data || !data.forecasts) return;
+          const labels = ['今天','明天','后天','大后天'];
+          el.innerHTML = data.forecasts.map((f, i) => `
+            <div class="wx-day">
+              <div class="wx-day-label">${labels[i] || f.date.slice(5)}</div>
+              <div class="wx-day-date">${f.date.slice(5)}</div>
+              <div class="wx-day-icon">${wxIcon(f.dayWeather)}</div>
+              <div class="wx-day-weather">${f.dayWeather}</div>
+              <div class="wx-day-temp">${f.dayTemp}° / ${f.nightTemp}°</div>
+            </div>`).join('');
+        });
+      });
+    }
+
+    applySystemTheme();
+    if (systemThemeMedia) {
+      if (typeof systemThemeMedia.addEventListener === 'function') {
+        systemThemeMedia.addEventListener('change', applySystemTheme);
+      } else if (typeof systemThemeMedia.addListener === 'function') {
+        systemThemeMedia.addListener(applySystemTheme);
+      }
     }
 
     document.querySelectorAll('.day-tab').forEach(btn => {
@@ -1019,6 +1156,180 @@
         if (activeDay === 'all') return;
         currentSegmentIndex += 1;
         showDay(activeDay);
+      });
+    }
+
+    // --- 加餐雷达 ---
+    function refreshRadar() {
+      const radarBtn = document.getElementById('radar-refresh-btn');
+      const radarList = document.getElementById('radar-list');
+      radarBtn.textContent = '定位中...';
+      radarBtn.disabled = true;
+      radarList.innerHTML = '<div class="radar-item" style="justify-content:center;"><span class="radar-info">正在获取您的位置...</span></div>';
+
+      if (!amapInst) {
+        radarList.innerHTML = '<div class="radar-item" style="justify-content:center; color:#f87171;"><span class="radar-info">地图未加载，请稍后再试</span></div>';
+        radarBtn.textContent = '看看附近';
+        radarBtn.disabled = false;
+        return;
+      }
+
+      amapInst.plugin('AMap.Geolocation', function () {
+        const geolocation = new AMap.Geolocation({
+          enableHighAccuracy: true,
+          timeout: 10000,
+          buttonPosition: 'RB',
+          buttonOffset: new AMap.Pixel(10, 20),
+          zoomToAccuracy: false
+        });
+
+        geolocation.getCurrentPosition(function (status, result) {
+          if (status === 'complete' || (result && result.position)) {
+             // Got exact pos, or let's use the returned position
+             const userPos = [result.position.lng, result.position.lat];
+             updateRadarList(userPos);
+          } else {
+             // Fallback: Use map center if geolocation fails
+             const center = amapInst.getCenter();
+             const fakePos = [center.lng, center.lat];
+             radarList.innerHTML = '<div class="radar-item" style="justify-content:center; color:#facc15; font-size:12px; text-align:center;"><p>定位失败(可能是没给权限或处于非安全环境)，<br>已按照当前地图中心点估算距离</p></div>';
+             setTimeout(() => { updateRadarList(fakePos); }, 2000);
+          }
+        });
+      });
+    }
+
+    function updateRadarList(userPos) {
+      const radarBtn = document.getElementById('radar-refresh-btn');
+      const radarList = document.getElementById('radar-list');
+      
+      // 新增美食详细数据
+      const foodData = [
+        { name: '恒香包子店', icon: '🥟', pos: [117.1788, 34.2643], hours: '05:00-10:30', rating: '3.8', cost: '10' },
+        { name: '百味地锅鸡', icon: '🍲', pos: [117.1748, 34.2601], hours: '11:00-14:00, 17:00-21:00', rating: '3.8', cost: '60' },
+        { name: '老九烧烤', icon: '🍢', pos: [117.2023, 34.2952], hours: '16:00-次日01:00', rating: '3.6', cost: '55' },
+        { name: '朱家烧烤', icon: '🔥', pos: [117.2289, 34.2530], hours: '16:00-次日01:00', rating: '4.3', cost: '60' },
+        { name: '小超烧烤', icon: '🏮', pos: [117.1652, 34.2389], hours: '17:00-次日00:30', rating: '4.1', cost: '69' },
+        { name: '陈家老味沓馍', icon: '🥙', pos: [117.1860, 34.2718], hours: '05:30-10:30', rating: '4.2', cost: '11' },
+        { name: '郭际辣饼铺', icon: '🌶️', pos: [117.1812, 34.2671], hours: '08:00-20:00', rating: '3.8', cost: '5' },
+        { name: '庆坤东坡把子肉', icon: '🥩', pos: [117.1795, 34.2667], hours: '11:00-15:30', rating: '4.3', cost: '29' },
+        { name: '幸福路方方烧烤', icon: '🍢', pos: [117.1882, 34.2572], hours: '17:30-24:00', rating: '3.7', cost: '82' },
+        { name: '袁姐烧烤', icon: '🔥', pos: [117.1956, 34.2621], hours: '16:30-24:00', rating: '3.8', cost: '70' },
+        { name: '多福临砂锅居', icon: '🍲', pos: [117.1687, 34.2526], hours: '11:00-14:00, 17:00-21:00', rating: '3.9', cost: '46' },
+        { name: '魏记火烧', icon: '🫓', pos: [117.1873, 34.2405], hours: '06:30-19:30', rating: '3.5', cost: '13' },
+        { name: '鬼王烤翅', icon: '🍗', pos: [117.1834, 34.2638], hours: '11:30-21:30', rating: '4.4', cost: '27' },
+        { name: '阿兰油烫鸭', icon: '🦆', pos: [117.1812, 34.2671], hours: '09:30-20:00', rating: '4.3', cost: '23' },
+        { name: '建国炸串', icon: '🍡', pos: [117.1901, 34.2592], hours: '08:00-20:00', rating: '4.0', cost: '24' },
+        { name: '陈开武老味饣它汤', icon: '🍜', pos: [117.1856, 34.2608], hours: '05:30-10:00', rating: '3.9', cost: '12' },
+        { name: '云龙湖阿喆米线', icon: '🍝', pos: [117.1958, 34.2302], hours: '08:30-21:00', rating: '4.0', cost: '25' },
+        { name: '夏抱冰冰粉', icon: '🍨', pos: [117.1934, 34.2570], hours: '08:30-23:00', rating: '4.0', cost: '15' }
+      ];
+
+      const snacks = [...foodData];
+
+      // 计算距离
+      snacks.forEach(s => {
+        // AMap.GeometryUtil.distance calculates distance in meters
+        if (AMap.GeometryUtil) {
+            s.dist = Math.round(AMap.GeometryUtil.distance(userPos, s.pos));
+        } else {
+            // fallback generic distance formula
+            const lngDiff = Math.abs(userPos[0] - s.pos[0]) * 100000;
+            const latDiff = Math.abs(userPos[1] - s.pos[1]) * 100000;
+            s.dist = Math.round(Math.sqrt(lngDiff*lngDiff + latDiff*latDiff));
+        }
+      });
+
+      // 排序
+      snacks.sort((a, b) => a.dist - b.dist);
+
+      let html = '';
+      window.radarUserPos = userPos;
+      snacks.forEach((s, i) => {
+        const distStr = s.dist > 1000 ? (s.dist/1000).toFixed(1) + ' km' : s.dist + ' m';
+        html += `
+          <div class="radar-item" style="flex-direction: column; align-items: flex-start; cursor: pointer;" onclick="toggleRadarRoute(${i}, ${s.pos[0]}, ${s.pos[1]}, ${s.dist})">
+            <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 8px;">
+              <span class="radar-info">
+                ${s.icon} ${s.name}
+              </span>
+              <span class="radar-dist" style="color: var(--primary); font-weight: bold;">${distStr}</span>
+            </div>
+            <div class="radar-tags">
+              <span class="radar-tag">⭐ ${s.rating}</span>
+              <span class="radar-tag">💰 ¥${s.cost}</span>
+              <span class="radar-tag">🕒 ${s.hours}</span>
+            </div>
+            <div id="radar-map-wrapper-${i}" style="display:none; width: 100%; margin-top: 10px;">
+               <div style="font-size: 12px; color: var(--text-sec); margin-bottom: 6px;" id="radar-route-info-${i}">正在规划路线...</div>
+               <div id="radar-map-${i}" style="width: 100%; height: 200px; border-radius: 8px; background: rgba(255,255,255,0.05);"></div>
+            </div>
+          </div>
+        `;
+      });
+      
+      radarList.innerHTML = html;
+      radarBtn.textContent = '看看附近';
+      radarBtn.disabled = false;
+    }
+
+    function toggleRadarRoute(index, lng, lat, dist) {
+      const wrapper = document.getElementById(`radar-map-wrapper-${index}`);
+      if (wrapper.style.display === 'block') {
+        wrapper.style.display = 'none';
+        return;
+      }
+      
+      // 折叠其他所有的面板
+      document.querySelectorAll('[id^="radar-map-wrapper-"]').forEach(el => {
+        el.style.display = 'none';
+      });
+      wrapper.style.display = 'block';
+
+      if (!window.radarMapInsts) window.radarMapInsts = {};
+      const infoContainer = document.getElementById(`radar-route-info-${index}`);
+      
+      // 如果没有初始化过该卡片的地图
+      if (!window.radarMapInsts[index]) {
+        const map = new AMap.Map(`radar-map-${index}`, {
+          zoom: 14,
+          center: [lng, lat],
+          mapStyle: getMapStyleByTheme(currentTheme)
+        });
+        window.radarMapInsts[index] = map;
+      }
+      
+      const map = window.radarMapInsts[index];
+      map.clearMap();
+      infoContainer.textContent = '正在为您规划最优路线...';
+
+      const start = window.radarUserPos;
+      const end = [lng, lat];
+      
+      // 如果距离小于1.5km，优先步行；否则驾车
+      const mode = dist < 1500 ? 'Walking' : 'Driving';
+      const modeLabel = dist < 1500 ? '步行' : '驾车';
+
+      map.plugin([`AMap.${mode}`], function() {
+        const routePlugin = new AMap[mode]({
+          map: map,
+          hideMarkers: false
+        });
+        routePlugin.search(start, end, function(status, result) {
+          if (status === 'complete') {
+             const route = result.routes[0];
+             const distance = (route.distance / 1000).toFixed(1);
+             let time = (route.time / 60).toFixed(0);
+             if (time >= 60) {
+               time = Math.floor(time / 60) + '小时' + (time % 60) + '分钟';
+             } else {
+               time = time + '分钟';
+             }
+             infoContainer.innerHTML = `<span style="color:var(--primary); font-weight:bold;">${modeLabel}</span> 距离约 ${distance}km，预计需要 ${time}`;
+          } else {
+             infoContainer.textContent = '路线规划失败，可能跨越区域或没有合适路线';
+          }
+        });
       });
     }
   </script>
