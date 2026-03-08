@@ -3,126 +3,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>徐州 3 天 2 夜路线网站｜上海往返</title>
+  <title>徐州三天两晚｜吃玩顺路版攻略</title>
   <style>
     :root{
-      --bg:#0b1020;
+      --bg:#0a1020;
       --panel:rgba(255,255,255,.08);
-      --panel-2:rgba(255,255,255,.12);
-      --text:#ecf2ff;
+      --panel2:rgba(255,255,255,.05);
+      --text:#eef4ff;
       --muted:#b7c3e0;
-      --accent:#79a8ff;
-      --accent-2:#8cf0c8;
-      --warn:#ffd479;
-      --danger:#ff9aa2;
-      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --line:rgba(255,255,255,.12);
+      --blue:#8cb4ff;
+      --green:#8fe6c2;
+      --orange:#ffd38a;
+      --red:#ff9ea7;
+      --shadow:0 12px 36px rgba(0,0,0,.28);
       --radius:22px;
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+      font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Microsoft YaHei",sans-serif;
       color:var(--text);
       background:
-        radial-gradient(circle at 20% 10%, rgba(121,168,255,.28), transparent 30%),
-        radial-gradient(circle at 85% 15%, rgba(140,240,200,.18), transparent 26%),
-        linear-gradient(180deg,#0b1020 0%,#111a31 55%,#0f1323 100%);
-      min-height:100vh;
+        radial-gradient(circle at 10% 10%, rgba(140,180,255,.18), transparent 24%),
+        radial-gradient(circle at 85% 10%, rgba(143,230,194,.15), transparent 24%),
+        linear-gradient(180deg,#0a1020 0%,#101931 58%,#0d1325 100%);
     }
-    .wrap{max-width:1200px;margin:0 auto;padding:28px 18px 72px}
-    .hero{
-      display:grid;grid-template-columns:1.3fr .9fr;gap:18px;align-items:stretch;
-    }
+    a{color:inherit}
+    .wrap{max-width:1280px;margin:0 auto;padding:22px 18px 64px}
     .card{
       background:var(--panel);
-      border:1px solid rgba(255,255,255,.12);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      border:1px solid var(--line);
       border-radius:var(--radius);
       box-shadow:var(--shadow);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
     }
+    .nav{
+      position:sticky;top:12px;z-index:30;
+      display:flex;gap:10px;flex-wrap:wrap;
+      width:max-content;max-width:100%;overflow:auto;
+      margin-bottom:18px;padding:10px 12px;background:rgba(10,16,32,.58)
+    }
+    .nav a{
+      text-decoration:none;padding:9px 12px;border-radius:999px;
+      background:rgba(255,255,255,.06);font-size:13px;white-space:nowrap
+    }
+    .hero{display:grid;grid-template-columns:1.35fr .9fr;gap:18px}
     .hero-main{padding:28px;position:relative;overflow:hidden}
-    .hero-main::after{
-      content:"";position:absolute;right:-80px;top:-80px;width:240px;height:240px;
-      background:radial-gradient(circle, rgba(121,168,255,.35), transparent 60%);
+    .hero-main:after{
+      content:"";position:absolute;right:-80px;top:-80px;width:220px;height:220px;
+      background:radial-gradient(circle, rgba(140,180,255,.28), transparent 62%);
       pointer-events:none;
     }
-    h1{margin:0 0 10px;font-size:clamp(28px,4vw,46px);line-height:1.08;letter-spacing:.2px}
-    .sub{color:var(--muted);font-size:15px;line-height:1.7;margin:0 0 16px}
-    .badges{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
-    .badge{
-      padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.08);
-      border:1px solid rgba(255,255,255,.12);font-size:13px;color:#eef4ff
-    }
-    .hero-side{padding:20px;display:grid;gap:12px}
-    .mini{padding:16px 16px 14px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
-    .mini h3{margin:0 0 8px;font-size:16px}
-    .mini p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
-
+    h1{margin:0 0 10px;font-size:clamp(30px,4vw,50px);line-height:1.05}
+    .sub{margin:0;color:var(--muted);font-size:15px;line-height:1.8}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .badge{padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line);font-size:13px}
+    .hero-side{display:grid;gap:12px;padding:18px}
+    .mini{padding:16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
+    .mini h3,.panel h2{margin:0 0 10px}
+    .mini p,.panel p,.panel li,.meta,.small{color:var(--muted);line-height:1.75}
     .section{margin-top:18px}
-    .grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+    .grid2{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .panel{padding:22px}
-    .panel h2{margin:0 0 14px;font-size:24px}
-    .panel p,.panel li{color:var(--muted);line-height:1.75}
+    .panel h2{font-size:24px}
+    .route-line{display:flex;flex-wrap:wrap;gap:10px}
+    .pill{padding:10px 14px;border-radius:999px;background:rgba(140,180,255,.12);border:1px solid rgba(140,180,255,.24);font-size:13px}
+    .note{padding:14px 16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
     .timeline{display:grid;gap:14px}
-    .step{
-      display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:flex-start;
-      padding:14px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)
-    }
-    .dot{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-weight:700}
-    .blue{background:rgba(121,168,255,.18);color:#cfe0ff}
-    .green{background:rgba(140,240,200,.18);color:#d6fff1}
-    .yellow{background:rgba(255,212,121,.18);color:#ffeab7}
-    .pink{background:rgba(255,154,162,.18);color:#ffd8dc}
+    .step{display:grid;grid-template-columns:42px 1fr;gap:14px;padding:14px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
+    .dot{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-weight:800}
+    .blue{background:rgba(140,180,255,.18)} .green{background:rgba(143,230,194,.18)} .orange{background:rgba(255,211,138,.18)} .red{background:rgba(255,158,167,.18)}
     .step h3{margin:0 0 6px;font-size:18px}
-    .step p{margin:0;color:var(--muted)}
-    .why{margin-top:8px;font-size:13px;color:#dce6ff;background:rgba(121,168,255,.09);padding:10px 12px;border-radius:12px}
-
-    .food-list,.weather-list{display:grid;gap:12px}
-    .food,.weather-item,.note{
-      padding:14px 16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)
-    }
-    .food h3,.weather-item h3,.note h3{margin:0 0 8px;font-size:17px}
-    .food p,.weather-item p,.note p{margin:0;color:var(--muted);line-height:1.7}
-    .tag{display:inline-block;margin-top:10px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.07);font-size:12px;color:#eaf1ff}
-
-    .route-line{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-    .route-pill{padding:10px 14px;border-radius:999px;background:rgba(121,168,255,.14);border:1px solid rgba(121,168,255,.25);font-size:13px}
-
+    .why{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(140,180,255,.1);font-size:13px;color:#dce8ff}
+    .boxlist{display:grid;gap:12px}
+    .box{padding:14px 16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
+    .box h3{margin:0 0 8px;font-size:17px}
+    .food-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .food-card{padding:16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
+    .food-card h3{margin:0 0 8px;font-size:18px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}
+    .tag{padding:5px 9px;border-radius:999px;font-size:12px;background:rgba(255,255,255,.07)}
+    .tag.good{background:rgba(143,230,194,.16)}
+    .tag.ok{background:rgba(255,211,138,.16)}
+    .tag.no{background:rgba(255,158,167,.16)}
+    .summary-table{width:100%;border-collapse:collapse;font-size:14px}
+    .summary-table th,.summary-table td{padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top;text-align:left}
+    .summary-table th{color:#dce7ff;font-weight:700}
     .comment-box{display:grid;gap:12px}
-    label{font-size:13px;color:#dbe6ff}
-    input,textarea,button{
-      font:inherit;border:none;outline:none;border-radius:16px
-    }
-    input,textarea{
-      width:100%;padding:14px 16px;background:rgba(255,255,255,.07);color:var(--text);
-      border:1px solid rgba(255,255,255,.11)
-    }
+    input,textarea,button{font:inherit;border:none;outline:none;border-radius:16px}
+    input,textarea{width:100%;padding:14px 16px;background:rgba(255,255,255,.07);color:var(--text);border:1px solid rgba(255,255,255,.12)}
     textarea{min-height:120px;resize:vertical}
-    button{
-      padding:14px 18px;font-weight:700;cursor:pointer;
-      background:linear-gradient(135deg, #8cb3ff, #79f0c9);
-      color:#0c1427;box-shadow:0 10px 24px rgba(121,168,255,.25)
-    }
-    button.secondary{background:rgba(255,255,255,.08);color:var(--text);box-shadow:none;border:1px solid rgba(255,255,255,.12)}
-    .comment-item{
-      padding:16px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)
-    }
+    button{padding:14px 18px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#8cb4ff,#8fe6c2);color:#07111f;box-shadow:0 10px 24px rgba(140,180,255,.22)}
+    .comment-item{padding:16px;border-radius:18px;background:var(--panel2);border:1px solid rgba(255,255,255,.08)}
     .comment-item strong{display:block;margin-bottom:6px}
-    .comment-meta{font-size:12px;color:#adc0ea;margin-bottom:8px}
-    .muted{color:var(--muted)}
-    .footer{margin-top:20px;color:#9fb2da;font-size:12px;line-height:1.7}
-    .topnav{
-      position:sticky;top:10px;z-index:20;margin-bottom:18px;padding:10px 14px;
-      display:flex;gap:10px;flex-wrap:wrap;background:rgba(12,18,36,.55);backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,.1);border-radius:999px;width:max-content;max-width:100%;overflow:auto
-    }
-    .topnav a{text-decoration:none;color:#eaf1ff;font-size:13px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06)}
-    @media (max-width: 920px){
-      .hero,.grid-2{grid-template-columns:1fr}
-      .wrap{padding-top:18px}
-      .topnav{width:100%}
+    .comment-meta{font-size:12px;color:#acc2ef;margin-bottom:8px}
+    .footer{margin-top:20px;font-size:12px;color:#99add4;line-height:1.8}
+    @media (max-width: 980px){
+      .hero,.grid2,.grid3,.food-grid{grid-template-columns:1fr}
+      .wrap{padding-top:16px}
+      .nav{width:100%}
     }
 
     /* ── 地图板块 ── */
@@ -131,106 +114,75 @@
     .map-header h2{margin:0;font-size:24px}
     .day-tabs{display:flex;gap:8px;flex-wrap:wrap}
     .day-tab{
-      padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;
-      border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#eaf1ff;
-      transition:background .2s,border-color .2s,color .2s;
+      padding:9px 16px;border-radius:999px;font-size:13px;font-weight:700;cursor:pointer;
+      border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:#eaf1ff;
+      transition:background .2s,border-color .2s;
     }
-    .day-tab.active{background:rgba(121,168,255,.25);border-color:rgba(121,168,255,.5);color:#cfe0ff}
+    .day-tab.active{background:rgba(140,180,255,.25);border-color:rgba(140,180,255,.5);color:#cfe0ff}
     .day-tab:hover:not(.active){background:rgba(255,255,255,.12)}
     #amap-container{
-      width:100%;height:460px;border-radius:16px;overflow:hidden;
+      width:100%;height:480px;border-radius:16px;overflow:hidden;
       border:1px solid rgba(255,255,255,.1);
     }
-    .map-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+    .map-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px}
     .legend-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
-    .legend-swatch{width:26px;height:4px;border-radius:2px;flex-shrink:0}
+    .legend-swatch{width:28px;height:4px;border-radius:2px;flex-shrink:0}
     .amap-pin{
       display:flex;align-items:center;justify-content:center;
-      width:30px;height:30px;border-radius:50%;font-size:12px;font-weight:700;
-      box-shadow:0 2px 8px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.3);
-      white-space:nowrap;cursor:default;
+      width:30px;height:30px;border-radius:50%;font-size:13px;
+      box-shadow:0 2px 10px rgba(0,0,0,.55);border:2px solid rgba(255,255,255,.25);
+      cursor:default;
     }
     .amap-label{
       position:absolute;left:34px;top:50%;transform:translateY(-50%);
-      background:rgba(11,16,32,.82);backdrop-filter:blur(8px);
+      background:rgba(10,16,32,.85);backdrop-filter:blur(8px);
       border:1px solid rgba(255,255,255,.14);border-radius:10px;
       padding:5px 10px;font-size:12px;color:#eef4ff;white-space:nowrap;
       pointer-events:none;
     }
     .amap-wrapper{position:relative;display:inline-flex;align-items:center}
-    @media (max-width:920px){#amap-container{height:340px}}
+    @media (max-width:980px){#amap-container{height:340px}}
   </style>
 </head>
 <body>
   <div class="wrap">
-    <nav class="topnav card">
+    <nav class="nav card">
       <a href="#overview">总览</a>
       <a href="#day1">3月14日</a>
       <a href="#day2">3月15日</a>
       <a href="#day3">3月16日</a>
-      <a href="#food">吃什么</a>
-      <a href="#comments">留言建议</a>
+      <a href="#food">吃的清单</a>
+      <a href="#comments">留言区</a>
       <a href="#map-section">路线地图</a>
     </nav>
 
     <section class="hero" id="overview">
       <div class="hero-main card">
-        <h1>徐州 3 天 2 夜<br>顺路版吃玩路线</h1>
+        <h1>徐州三天两晚<br>吃玩顺路版攻略</h1>
         <p class="sub">
-          去程：3 月 14 日从上海站乘 G986 出发，抵达徐州东。返程：3 月 16 日 17:10 从徐州东站乘 G8269 返回上海。<br>
-          这份网站把你想去的云龙湖、云龙山、云龙山索道、徐州博物馆，以及早餐店顺到一条比较省劲的路线里，同时把不太值得专门跑一趟的店做了取舍。
+          去程：3 月 14 日 G986，07:05 上海站出发，抵达徐州东。返程：3 月 16 日 G8269，17:10 徐州东站出发回上海。<br>
+          这版把你补充的 11 家店重新按早餐、正餐、小吃甜品分类，再和云龙湖、云龙山、云龙山索道、徐州博物馆混排进 3 天 2 夜路线里，尽量做到顺路、少折返、少踩雷。
         </p>
         <div class="badges">
-          <span class="badge">适合发布分享</span>
-          <span class="badge">按天气优化</span>
+          <span class="badge">按天气排</span>
           <span class="badge">避开周一闭馆</span>
-          <span class="badge">保留留言功能</span>
+          <span class="badge">保留完整吃单</span>
+          <span class="badge">可发布网页</span>
+          <span class="badge">留言授权码 517</span>
         </div>
       </div>
       <div class="hero-side card">
         <div class="mini">
-          <h3>这次安排的核心思路</h3>
-          <p>把室外强体验放在天气更舒服的前两天，把徐州博物馆提前到周末，避免周一闭馆踩空。</p>
+          <h3>这次怎么排</h3>
+          <p>3 月 14 日更暖，优先放云龙湖、云龙山和索道；3 月 15 日更凉，把徐州博物馆放这天上午；3 月 16 日是周一，博物馆闭馆，只留补漏吃饭和返程。</p>
         </div>
         <div class="mini">
-          <h3>这次主保留的店</h3>
-          <p>恒香包子店、陈开武老味饣它汤。魏记火烧不做主线，只保留为候补加餐。</p>
+          <h3>哪些店保留主线</h3>
+          <p>恒香包子店、陈开武老味饣它汤、庆坤东坡把子肉、云龙湖阿喆米线、鬼王烤翅、阿兰油烫鸭、夏抱冰冰粉，都是值得优先安排的。</p>
         </div>
         <div class="mini">
-          <h3>留言区说明</h3>
-          <p>授权码为 517。输入后可发表建议并显示在页面里。当前版本为静态网页留言方案，适合展示与收集建议。</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section grid-2">
-      <div class="panel card">
-        <h2>路线总览</h2>
-        <div class="route-line">
-          <span class="route-pill">Day 1：到达 → 陈开武老味饣它汤 → 云龙湖 → 云龙山 / 索道</span>
-          <span class="route-pill">Day 2：恒香包子店 → 徐州博物馆 → 轻松补拍 / 市区慢逛</span>
-          <span class="route-pill">Day 3：自由早餐 → 返程前机动时间 → 徐州东站</span>
-        </div>
-        <div class="note" style="margin-top:14px">
-          <h3>为什么这么排</h3>
-          <p>3 月 14 日和 15 日天气都还能走户外，其中 14 日更暖，适合先把云龙湖和云龙山这组连在一起；徐州博物馆周一闭馆，所以必须安排在 14 日或 15 日，这里放到 15 日上午更稳，也不会赶。</p>
-        </div>
-      </div>
-      <div class="panel card">
-        <h2>天气提醒</h2>
-        <div class="weather-list">
-          <div class="weather-item">
-            <h3>3 月 14 日（周六）</h3>
-            <p>多云，约 6–17°C。三天里相对最舒服，适合湖边散步、坐索道、上山看视野。</p>
-          </div>
-          <div class="weather-item">
-            <h3>3 月 15 日（周日）</h3>
-            <p>云量减少，约 6–10°C。体感比 14 日凉，适合把更稳定的室内行程放这天上午。</p>
-          </div>
-          <div class="weather-item">
-            <h3>3 月 16 日（周一）</h3>
-            <p>多云，约 7–13°C。徐州博物馆周一闭馆，所以这天只安排弹性活动和返程。</p>
-          </div>
+          <h3>哪些店降级为候补</h3>
+          <p>魏记火烧、老九烧烤评分相对一般，不建议专门绕路；建国炸串可以看胃口临时加；多福临砂锅居适合多人正餐，但你这趟如果想轻松一点，不一定要硬塞进去。</p>
         </div>
       </div>
     </section>
@@ -249,284 +201,281 @@
         </div>
         <div id="amap-container"></div>
         <div class="map-legend">
-          <div class="legend-item">
-            <span class="legend-swatch" style="background:#79a8ff"></span>Day 1｜云龙湖 → 云龙山
+          <div class="legend-item"><span class="legend-swatch" style="background:#8cb4ff"></span>Day 1｜到达 → 云龙湖 → 云龙山 → 烤翅</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#8fe6c2"></span>Day 2｜早餐 → 博物馆 → 把子肉 → 油烫鸭</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#ffd38a"></span>Day 3｜机动收尾 → 返程</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid2">
+      <div class="panel card">
+        <h2>路线总览</h2>
+        <div class="route-line">
+          <span class="pill">Day 1：到达 → 徐州早餐/早午饭 → 云龙湖 → 云龙山 → 云龙山索道 → 湖边午餐 → 市中心晚饭/夜宵</span>
+          <span class="pill">Day 2：经典早餐 → 徐州博物馆 → 彭城广场一带午饭 → 晚上吃最强小吃</span>
+          <span class="pill">Day 3：轻松早餐 → 卤味/补漏 → 去徐州东站返程</span>
+        </div>
+        <div class="note" style="margin-top:14px">
+          <strong>为什么这样安排</strong>
+          <p style="margin:8px 0 0">你这趟最卡时间的其实不是吃，是博物馆周一不开放，所以博物馆必须放在 14 日或 15 日。再加上 14 日最高温 17°C，比 15 日更适合户外，干脆把云龙湖、云龙山、索道一口气打完，15 日用来博物馆 + 市中心吃东西，16 日收尾最轻松。</p>
+        </div>
+      </div>
+      <div class="panel card">
+        <h2>天气与开放信息</h2>
+        <div class="boxlist">
+          <div class="box">
+            <h3>3 月 14 日</h3>
+            <p>多云，约 6–17°C，三天里最舒服，适合走云龙湖、云龙山、索道。citeturn0forecast0</p>
           </div>
-          <div class="legend-item">
-            <span class="legend-swatch" style="background:#8cf0c8"></span>Day 2｜博物馆 → 慢逛
+          <div class="box">
+            <h3>3 月 15 日</h3>
+            <p>云量减少，约 6–10°C，体感更凉，适合把室内的徐州博物馆放上午。citeturn0forecast0</p>
           </div>
-          <div class="legend-item">
-            <span class="legend-swatch" style="background:#ffd479"></span>Day 3｜机动 → 返程
+          <div class="box">
+            <h3>徐州博物馆</h3>
+            <p>周二至周日 9:00–17:00，16:00 停止入馆；周一闭馆，通常需要实名预约。citeturn0search0turn0search2</p>
+          </div>
+          <div class="box">
+            <h3>云龙山索道</h3>
+            <p>冬季一般 9:00–17:00，建议别拖到太晚去坐。citeturn0search4</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section grid-2" id="day1">
+    <section class="section grid2" id="day1">
       <div class="panel card">
         <h2>Day 1｜3 月 14 日 周六</h2>
         <div class="timeline">
-          <div class="step">
-            <div class="dot blue">1</div>
-            <div>
-              <h3>抵达徐州东 → 进市区</h3>
-              <p>到站后先去市区或酒店放行李，别把第一天搞太赶，主打一个开局舒服。</p>
-              <div class="why">这样排是因为你上午到徐州，第一天本来就最适合把大景点打掉。</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="dot green">2</div>
-            <div>
-              <h3>午早饭 / 早午餐：陈开武老味饣它汤</h3>
-              <p>主吃饣它汤 + 煎饺 / 煎包。它更像真正的徐州早餐代表，优先级高于魏记火烧。</p>
-              <div class="why">你第一顿建议直接吃最有城市辨识度的，不要浪费胃口在可替代项上。</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="dot yellow">3</div>
-            <div>
-              <h3>云龙湖</h3>
-              <p>午后去云龙湖，沿湖散步、拍照、慢慢走。它和云龙山是一组连着玩的路线，顺路不折返。</p>
-              <div class="why">这天最暖，湖边体验最好；而且云龙湖是整趟里最轻松、最出片的一段。</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="dot pink">4</div>
-            <div>
-              <h3>云龙山 + 云龙山索道</h3>
-              <p>建议玩法：上山坐索道，下山慢走；或者如果体力不错，就走一段山路再看情况补索道。</p>
-              <div class="why">索道和山景放在同一天，体验是完整的，而且你不用第二次专门往景区跑。</div>
-            </div>
-          </div>
+          <div class="step"><div class="dot blue">1</div><div><h3>徐州东到市区，先放行李</h3><p>从高铁站进市区后，先去酒店放包，第一天别背着行李硬跑景点。</p><div class="why">你这天是到达日，节奏松一点，后面玩起来更舒服。</div></div></div>
+          <div class="step"><div class="dot green">2</div><div><h3>早午饭：陈开武老味饣它汤</h3><p>点饣它汤 + 煎饺/煎包，直接吃徐州最有代表性的早餐。这个优先级高于魏记火烧。</p><div class="why">刚到城市先吃“城市记忆点”最强的东西，更值回票价。</div></div></div>
+          <div class="step"><div class="dot blue">3</div><div><h3>云龙湖</h3><p>吃完去云龙湖散步、拍照，湖边环境好，也不会太累。</p><div class="why">14 日温度最高，放户外最合理。</div></div></div>
+          <div class="step"><div class="dot orange">4</div><div><h3>云龙山 + 云龙山索道</h3><p>建议上山坐索道，或者反过来，看你当时排队情况。体力不想消耗太多就索道优先。</p><div class="why">云龙湖和云龙山本来就是一组，拆开玩反而浪费路程。</div></div></div>
+          <div class="step"><div class="dot green">5</div><div><h3>午后/偏晚午餐：云龙湖阿喆米线</h3><p>牛肉肉酱米线可以安排在湖边景点结束后，刚好顺路收口。</p><div class="why">它就在云龙湖板块，不用再回市区找饭。</div></div></div>
+          <div class="step"><div class="dot red">6</div><div><h3>晚餐：鬼王烤翅</h3><p>这家是你清单里综合最强的一家，晚上吃最合适，招牌鬼王全翅优先。</p><div class="why">高评分小吃放到第一晚，情绪价值最高，也比较像旅行该有的样子。</div></div></div>
+          <div class="step"><div class="dot orange">7</div><div><h3>加餐/甜品：夏抱冰冰粉 或 建国炸串</h3><p>如果晚上还吃得下，二选一。想解腻选冰粉，想继续重口选炸串。</p><div class="why">这两个都更适合做补刀，不建议单独占一餐。</div></div></div>
         </div>
       </div>
       <div class="panel card">
-        <h2>Day 1 边上说明</h2>
-        <div class="note">
-          <h3>适合发朋友圈的一天</h3>
-          <p>第一天是“徐州印象建立日”。湖景、山景、索道都有，内容丰富但并不乱，走起来也最顺。</p>
-        </div>
-        <div class="note" style="margin-top:12px">
-          <h3>晚饭这里故意没写死</h3>
-          <p>因为你给的重点是早餐店和景点，不想把一天塞太满。晚上可以在云龙湖附近就近吃，留给临场发挥。</p>
+        <h2>Day 1 为什么这样排</h2>
+        <div class="boxlist">
+          <div class="box"><h3>天气最适合户外</h3><p>3 月 14 日最高约 17°C，是三天里最适合湖边和山景的一天。citeturn0forecast0</p></div>
+          <div class="box"><h3>景点天然成组</h3><p>云龙湖、云龙山、索道本身就是一条线，拆开玩会来回折腾。</p></div>
+          <div class="box"><h3>吃的也顺路</h3><p>云龙湖阿喆米线直接放在景点后面，鬼王烤翅放晚上收尾，路线比较顺，不会东一榔头西一棒子。</p></div>
         </div>
       </div>
     </section>
 
-    <section class="section grid-2" id="day2">
+    <section class="section grid2" id="day2">
       <div class="panel card">
         <h2>Day 2｜3 月 15 日 周日</h2>
         <div class="timeline">
-          <div class="step">
-            <div class="dot blue">1</div>
-            <div>
-              <h3>早餐：恒香包子店</h3>
-              <p>推荐辣汤 + 肉包。价格友好，属于比较稳的本地早餐线。</p>
-              <div class="why">把两家最值得吃的都拆开安排，这样不会重复感太强，也不会一天吃太撑。</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="dot green">2</div>
-            <div>
-              <h3>徐州博物馆</h3>
-              <p>建议上午去。重点看汉代文物相关展陈，节奏会更从容。</p>
-              <div class="why">博物馆周一闭馆，所以必须在周末解决；周日早上去最稳，不受返程那天限制。</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="dot yellow">3</div>
-            <div>
-              <h3>下午自由机动</h3>
-              <p>可以二刷云龙湖轻松补拍，也可以在市区慢慢逛，把这天当成“缓冲日”。</p>
-              <div class="why">第二天不建议再硬塞新大景点，不然会让整趟节奏变成赶场。</div>
-            </div>
-          </div>
+          <div class="step"><div class="dot green">1</div><div><h3>早餐：恒香包子店</h3><p>辣汤 + 肉包，和前一天的饣它汤形成两种不同徐州早餐体验。</p><div class="why">两顿早餐一个是汤魂，一个是包子辣汤，搭配更完整。</div></div></div>
+          <div class="step"><div class="dot blue">2</div><div><h3>徐州博物馆</h3><p>建议上午去，节奏从容些，也更稳。记得提前预约。</p><div class="why">周一闭馆，所以必须在今天之前完成。citeturn0search0turn0search2</div></div></div>
+          <div class="step"><div class="dot orange">3</div><div><h3>午餐：庆坤东坡把子肉</h3><p>把子肉是徐州正餐代表，吃法和早餐风格完全不同，适合博物馆出来接一顿正经午饭。</p><div class="why">前一天晚上偏小吃，第二天中午该上一顿徐州硬菜了。</div></div></div>
+          <div class="step"><div class="dot red">4</div><div><h3>下午弹性：市区慢逛 / 回酒店休息 / 补拍</h3><p>这天不用塞太满，博物馆出来后可以留点机动时间，旅行不会显得赶。</p><div class="why">第二天往往最容易走累，留白一点反而体验好。</div></div></div>
+          <div class="step"><div class="dot green">5</div><div><h3>晚餐：阿兰油烫鸭</h3><p>如果想吃徐州本地卤味感更强的东西，这家很合适，也能和前一天烤翅形成区分。</p><div class="why">你清单里它评分不错，但更适合晚上慢慢吃，不适合当匆忙路餐。</div></div></div>
+          <div class="step"><div class="dot orange">6</div><div><h3>候补：多福临砂锅居</h3><p>如果你更想坐下来吃一顿偏正餐的，也可以把阿兰油烫鸭换成多福临砂锅居。</p><div class="why">多福临适合多人或胃口大的正餐，但对三天两晚来说优先级略低于更有徐州辨识度的店。</div></div></div>
         </div>
       </div>
       <div class="panel card">
-        <h2>Day 2 边上说明</h2>
-        <div class="note">
-          <h3>为什么博物馆不放 Day 1</h3>
-          <p>因为 Day 1 本身已经有云龙湖 + 云龙山 + 索道这组完整线，塞进博物馆会显得碎。把博物馆独立放到 Day 2，体验更完整。</p>
-        </div>
-        <div class="note" style="margin-top:12px">
-          <h3>周日安排的好处</h3>
-          <p>你前一天如果玩得久，第二天还能弹性起床；就算天气偏凉，博物馆这种室内点也不受太大影响。</p>
+        <h2>Day 2 为什么这样排</h2>
+        <div class="boxlist">
+          <div class="box"><h3>把博物馆稳稳落地</h3><p>徐州博物馆周一闭馆，所以今天必须安排掉，而且上午去最稳。citeturn0search0turn0search2</p></div>
+          <div class="box"><h3>冷热节奏更舒服</h3><p>15 日最高只有约 10°C，室内活动更合适。citeturn0forecast0</p></div>
+          <div class="box"><h3>吃的层次更完整</h3><p>今天是包子辣汤 + 把子肉 + 油烫鸭，和第一天的米线、烤翅不会重复感太强。</p></div>
         </div>
       </div>
     </section>
 
-    <section class="section grid-2" id="day3">
+    <section class="section grid2" id="day3">
       <div class="panel card">
         <h2>Day 3｜3 月 16 日 周一</h2>
         <div class="timeline">
-          <div class="step">
-            <div class="dot blue">1</div>
-            <div>
-              <h3>早餐自由安排</h3>
-              <p>如果前两家都已经吃到，这天可以自由吃；如果特别喜欢其中一家，可以二刷。</p>
-              <div class="why">这天不需要为了打卡再折腾，轻松一点更合理。</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="dot green">2</div>
-            <div>
-              <h3>机动时间</h3>
-              <p>可留给补拍、买点伴手礼、或者在市区再慢逛一会儿。徐州博物馆这天闭馆，不要安排进去。</p>
-              <div class="why">返程是 17:10，从容去徐州东站最重要，不建议这天再硬上远点位。</div>
-            </div>
-          </div>
-          <div class="step">
-            <div class="dot yellow">3</div>
-            <div>
-              <h3>前往徐州东站返程</h3>
-              <p>建议预留充分时间去车站，收尾要松一点，整趟旅程观感会更好。</p>
-              <div class="why">最后一天最怕“为了多塞一个点把自己弄得很狼狈”。</div>
-            </div>
-          </div>
+          <div class="step"><div class="dot green">1</div><div><h3>早餐：自由选择</h3><p>如果前两天没吃够徐州早餐，可以回访最喜欢的一家；也可以试试魏记火烧，但别抱太高期待。</p><div class="why">这天是返程日，最适合补漏，不适合开新大项目。</div></div></div>
+          <div class="step"><div class="dot orange">2</div><div><h3>午餐：补吃建国炸串 / 多福临砂锅居 / 回头店</h3><p>按胃口和时间决定。想轻一点就炸串，想坐下来就多福临，想稳妥就回吃最喜欢的一家。</p><div class="why">周一博物馆不开，这天本来就是弹性收尾位。citeturn0search0</div></div></div>
+          <div class="step"><div class="dot red">3</div><div><h3>不建议：专门去老九烧烤</h3><p>如果时间紧，这家最先放弃。评分和必要性都没那么高。</p><div class="why">三天两晚胃口有限，应该把位置留给更稳的店。</div></div></div>
+          <div class="step"><div class="dot blue">4</div><div><h3>提前去徐州东站，17:10 返程</h3><p>返程日不要掐点，留足交通时间，轻轻松松结束。</p><div class="why">最后一天最怕赶车，宁可少吃一口，也别把自己搞得狼狈。</div></div></div>
         </div>
       </div>
       <div class="panel card">
-        <h2>Day 3 边上说明</h2>
-        <div class="note">
-          <h3>魏记火烧怎么处理</h3>
-          <p>不放主线。因为评分相对一般，且你这趟时间不算太长，不值得专门绕路。如果刚好顺路、嘴馋、想加餐，再考虑。</p>
-        </div>
-        <div class="note" style="margin-top:12px">
-          <h3>这天的关键词</h3>
-          <p>收一收，松一点，别跟行程较劲。</p>
+        <h2>Day 3 建议吃法</h2>
+        <div class="boxlist">
+          <div class="box"><h3>最稳版本</h3><p>早餐回访恒香包子店或陈开武老味饣它汤；中午看时间补吃建国炸串，下午去车站。</p></div>
+          <div class="box"><h3>想再吃一顿正餐</h3><p>把多福临砂锅居放到今天中午，吃完直接去高铁站，逻辑也通。</p></div>
+          <div class="box"><h3>不建议硬塞太多</h3><p>返程日本来就容易累，魏记火烧和老九烧烤都不是非吃不可，不安排也完全没问题。</p></div>
         </div>
       </div>
     </section>
 
-    <section class="section grid-2" id="food">
+    <section class="section" id="food">
       <div class="panel card">
-        <h2>这次保留 / 舍弃的吃法</h2>
-        <div class="food-list">
-          <div class="food">
-            <h3>保留 1：陈开武老味饣它汤</h3>
-            <p>更有徐州早餐辨识度，适合做第一顿。推荐：饣它汤 + 煎饺 / 煎包。</p>
-            <span class="tag">主线保留</span>
+        <h2>吃的清单｜分类 + 建议级别</h2>
+        <div class="food-grid">
+          <div class="food-card">
+            <h3>恒香包子店</h3>
+            <div class="tags"><span class="tag">早餐</span><span class="tag">¥10</span><span class="tag">3.8</span><span class="tag good">推荐</span></div>
+            <p>辣汤 + 肉包是经典搭配，作为徐州地道早餐很稳。适合安排在 Day 2 早上。</p>
           </div>
-          <div class="food">
-            <h3>保留 2：恒香包子店</h3>
-            <p>作为另一顿早餐很合适。推荐：辣汤 + 肉包，省心不踩雷。</p>
-            <span class="tag">主线保留</span>
+          <div class="food-card">
+            <h3>陈开武老味饣它汤</h3>
+            <div class="tags"><span class="tag">早餐</span><span class="tag">¥12</span><span class="tag">3.9</span><span class="tag good">强烈推荐</span></div>
+            <p>饣它汤 + 煎饺/煎包很有代表性，算徐州早餐灵魂，优先级很高。</p>
           </div>
-          <div class="food">
-            <h3>候补：魏记火烧</h3>
-            <p>特色有，但评分一般，不建议为了它专门改路线。只有在顺路或嘴馋时再吃。</p>
-            <span class="tag">可舍弃</span>
+          <div class="food-card">
+            <h3>魏记火烧</h3>
+            <div class="tags"><span class="tag">早餐/加餐</span><span class="tag">¥13</span><span class="tag">3.5</span><span class="tag no">候补</span></div>
+            <p>牛肉火烧、羊肉火烧可以尝鲜，但评分偏一般，不建议专门跑一趟。</p>
           </div>
-        </div>
-      </div>
-      <div class="panel card">
-        <h2>一句话总结</h2>
-        <div class="note">
-          <h3>吃法原则</h3>
-          <p>你这趟不是“吃遍徐州”，而是“把最值得保留的徐州味道，嵌进最顺的景点路线里”。所以不追求全吃，只追求顺路和体验感。</p>
+          <div class="food-card">
+            <h3>庆坤东坡把子肉</h3>
+            <div class="tags"><span class="tag">午/晚餐</span><span class="tag">¥29</span><span class="tag">4.3</span><span class="tag good">推荐</span></div>
+            <p>把子肉是正儿八经的徐州代表菜，适合放在博物馆后的午餐。</p>
+          </div>
+          <div class="food-card">
+            <h3>多福临砂锅居</h3>
+            <div class="tags"><span class="tag">午/晚餐</span><span class="tag">¥46</span><span class="tag">3.9</span><span class="tag ok">可选</span></div>
+            <p>鸡爪子、带鱼是招牌，适合坐下来吃一顿，但三天两晚里不是最优先。</p>
+          </div>
+          <div class="food-card">
+            <h3>云龙湖阿喆米线</h3>
+            <div class="tags"><span class="tag">午餐</span><span class="tag">¥25</span><span class="tag">4.0</span><span class="tag good">推荐</span></div>
+            <p>牛肉肉酱米线适合和云龙湖板块绑一起，路线最顺。</p>
+          </div>
+          <div class="food-card">
+            <h3>鬼王烤翅</h3>
+            <div class="tags"><span class="tag">晚餐/夜宵</span><span class="tag">¥27</span><span class="tag">4.4</span><span class="tag good">强烈推荐</span></div>
+            <p>这份清单里综合最能打的一家，第一晚吃最合适。</p>
+          </div>
+          <div class="food-card">
+            <h3>老九烧烤</h3>
+            <div class="tags"><span class="tag">晚餐/夜宵</span><span class="tag">¥55</span><span class="tag">3.6</span><span class="tag no">不建议优先</span></div>
+            <p>并不是不能吃，但没有必要挤进这趟 3 天 2 夜主线。</p>
+          </div>
+          <div class="food-card">
+            <h3>阿兰油烫鸭</h3>
+            <div class="tags"><span class="tag">晚餐/小吃</span><span class="tag">¥23</span><span class="tag">4.3</span><span class="tag good">推荐</span></div>
+            <p>油烫鸭很有本地小吃气质，适合第二天晚餐或返程前补吃。</p>
+          </div>
+          <div class="food-card">
+            <h3>建国炸串</h3>
+            <div class="tags"><span class="tag">加餐/夜宵</span><span class="tag">¥24</span><span class="tag">4.0</span><span class="tag ok">可加</span></div>
+            <p>老徐州炸串味道不错，但更适合当补充，不建议独占一餐。</p>
+          </div>
+          <div class="food-card">
+            <h3>夏抱冰冰粉</h3>
+            <div class="tags"><span class="tag">甜品</span><span class="tag">¥15</span><span class="tag">4.0</span><span class="tag good">推荐</span></div>
+            <p>吃完重口味后非常适合解腻，旅行里留一口给它是值得的。</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section grid-2" id="comments">
+    <section class="section grid2">
       <div class="panel card">
+        <h2>一句话结论</h2>
+        <table class="summary-table">
+          <thead>
+            <tr><th>级别</th><th>店铺</th><th>建议</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>一定要去</td><td>陈开武老味饣它汤、恒香包子店、庆坤东坡把子肉、鬼王烤翅</td><td>这几家最能构成徐州这趟的“记忆点”。</td></tr>
+            <tr><td>顺路很适合</td><td>云龙湖阿喆米线、阿兰油烫鸭、夏抱冰冰粉</td><td>安排得好会很顺，不用单独绕路。</td></tr>
+            <tr><td>看胃口再说</td><td>多福临砂锅居、建国炸串</td><td>不是不好吃，而是三天两晚不一定塞得下。</td></tr>
+            <tr><td>最先舍弃</td><td>魏记火烧、老九烧烤</td><td>分数和必要性都没高到要硬安排。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="panel card" id="comments">
         <h2>留言建议区</h2>
-        <p class="muted">可以让别人补充建议，比如“哪里更值得吃”“是否要换一家早餐店”“索道要不要坐”等。需要输入授权码才能提交，授权码是 <strong>517</strong>。</p>
+        <p class="meta">输入授权码 <strong>517</strong> 才能提交留言。留言会显示在当前网页中，适合发布展示和收集建议。</p>
         <div class="comment-box">
           <div>
-            <label for="name">昵称</label>
-            <input id="name" placeholder="写个昵称，比如：会玩的朋友" />
+            <label for="nickname">昵称</label>
+            <input id="nickname" placeholder="比如：徐州本地通" />
           </div>
           <div>
-            <label for="pass">授权码</label>
-            <input id="pass" type="password" placeholder="输入授权码 517" />
+            <label for="code">授权码</label>
+            <input id="code" placeholder="请输入授权码" />
           </div>
           <div>
-            <label for="message">建议内容</label>
-            <textarea id="message" placeholder="比如：云龙湖傍晚更好看；博物馆尽量早点预约；某家店可以替换成另一家……"></textarea>
+            <label for="comment">建议内容</label>
+            <textarea id="comment" placeholder="比如：鬼王烤翅建议早点去，晚一点更容易排队。"></textarea>
           </div>
-          <div style="display:flex;gap:10px;flex-wrap:wrap">
-            <button id="submitBtn">提交留言</button>
-            <button class="secondary" id="clearBtn" type="button">仅清空我当前浏览器里的留言</button>
-          </div>
-          <p id="tip" class="muted"></p>
+          <button id="submitBtn">提交留言</button>
         </div>
-      </div>
-      <div class="panel card">
-        <h2>已显示的留言</h2>
-        <div id="commentList" class="comment-box"></div>
+        <div id="commentsList" style="margin-top:16px;display:grid;gap:12px"></div>
       </div>
     </section>
 
     <div class="footer">
-      说明：这个网页是单文件静态版，适合直接发布。留言功能默认使用浏览器本地存储显示，适合演示、收集、整理意见。如果后续要做成“所有访客都能看到同一批留言”的正式线上版本，可以再接入数据库服务。
+      本页适合直接发布分享。说明：留言功能基于浏览器本地存储，同一浏览器里可持续显示；如果后面想做成所有访客都能看到同一批留言的正式评论区，需要接入后端数据库。<br>
+      天气信息来自天气工具；徐州博物馆开放信息与预约说明来自徐州本地宝汇总页面；云龙山索道时间参考徐州本地宝汇总页面。citeturn0forecast0turn0search0turn0search2turn0search4
     </div>
   </div>
 
   <script>
     const AUTH_CODE = '517';
-    const STORAGE_KEY = 'xuzhou-trip-comments-v1';
-
-    const nameEl = document.getElementById('name');
-    const passEl = document.getElementById('pass');
-    const messageEl = document.getElementById('message');
-    const submitBtn = document.getElementById('submitBtn');
-    const clearBtn = document.getElementById('clearBtn');
-    const tipEl = document.getElementById('tip');
-    const listEl = document.getElementById('commentList');
-
-    function escapeHtml(str=''){ 
-      return str.replace(/[&<>"/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[s]));
-    }
+    const STORAGE_KEY = 'xuzhou_trip_comments_v2';
+    const defaultComments = [
+      {name:'游客@小鹿', text:'3月14日如果云龙山索道人多，可以先逛云龙湖，晚一点再回去坐。', time:'示例留言'},
+      {name:'游客@本地人', text:'把子肉和油烫鸭都偏重口，晚上最好配个冰粉收尾。', time:'示例留言'}
+    ];
 
     function getComments(){
-      try{return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')}catch{return []}
-    }
-
-    function saveComments(data){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      try{
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if(Array.isArray(saved) && saved.length) return saved;
+      }catch(e){}
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultComments));
+      return defaultComments;
     }
 
     function renderComments(){
-      const items = getComments().sort((a,b)=>b.time-a.time);
-      if(!items.length){
-        listEl.innerHTML = '<div class="comment-item muted">还没有留言，欢迎第一个来补充建议。</div>';
-        return;
-      }
-      listEl.innerHTML = items.map(item => `
+      const list = document.getElementById('commentsList');
+      const comments = getComments();
+      list.innerHTML = comments.map(item => `
         <div class="comment-item">
-          <strong>${escapeHtml(item.name || '匿名') }</strong>
-          <div class="comment-meta">${new Date(item.time).toLocaleString('zh-CN')}</div>
-          <div>${escapeHtml(item.message)}</div>
+          <strong>${escapeHtml(item.name)}</strong>
+          <div class="comment-meta">${escapeHtml(item.time)}</div>
+          <div>${escapeHtml(item.text)}</div>
         </div>
       `).join('');
     }
 
-    submitBtn.addEventListener('click', () => {
-      const name = nameEl.value.trim() || '匿名';
-      const pass = passEl.value.trim();
-      const message = messageEl.value.trim();
-      if(pass !== AUTH_CODE){
-        tipEl.textContent = '授权码不对，再看一眼，应该是 517。';
-        return;
-      }
-      if(!message){
-        tipEl.textContent = '建议内容还没写。';
-        return;
-      }
-      const data = getComments();
-      data.push({name, message, time: Date.now()});
-      saveComments(data);
-      messageEl.value = '';
-      passEl.value = '';
-      tipEl.textContent = '留言已显示。';
-      renderComments();
-    });
+    function escapeHtml(str){
+      return String(str)
+        .replace(/&/g,'&amp;')
+        .replace(/</g,'&lt;')
+        .replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;')
+        .replace(/'/g,'&#39;');
+    }
 
-    clearBtn.addEventListener('click', () => {
-      localStorage.removeItem(STORAGE_KEY);
-      tipEl.textContent = '当前浏览器里的留言已清空。';
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      const name = document.getElementById('nickname').value.trim() || '匿名游客';
+      const code = document.getElementById('code').value.trim();
+      const text = document.getElementById('comment').value.trim();
+
+      if(code !== AUTH_CODE){
+        alert('授权码不对，请输入 517。');
+        return;
+      }
+      if(!text){
+        alert('请先写点建议再提交。');
+        return;
+      }
+
+      const comments = getComments();
+      comments.unshift({
+        name,
+        text,
+        time: new Date().toLocaleString('zh-CN')
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(comments));
+      document.getElementById('comment').value = '';
+      document.getElementById('code').value = '';
       renderComments();
     });
 
@@ -536,60 +485,56 @@
   <!-- 高德地图 JS API v2.0 -->
   <script src="https://webapi.amap.com/maps?v=2.0&key=a7377cb4ca2f8674716134874c58451b&callback=initAMap"></script>
   <script>
-    /* ── 坐标数据 ── */
+    /* ── 行程坐标 ── */
     const tripDays = {
       1: {
-        color: '#79a8ff',
-        label: 'Day 1',
+        color: '#8cb4ff',
         points: [
-          { pos: [117.2077, 34.2717], name: '徐州东站', icon: '🚄' },
-          { pos: [117.1856, 34.2608], name: '陈开武饣它汤', icon: '🍜' },
-          { pos: [117.1965, 34.2315], name: '云龙湖',    icon: '🌊' },
-          { pos: [117.1977, 34.2420], name: '云龙山·索道', icon: '⛰️' },
+          { pos: [117.2077, 34.2717], name: '徐州东站',       icon: '🚄' },
+          { pos: [117.1856, 34.2608], name: '陈开武饣它汤',   icon: '🍜' },
+          { pos: [117.1965, 34.2315], name: '云龙湖',         icon: '🌊' },
+          { pos: [117.1977, 34.2420], name: '云龙山·索道',    icon: '⛰️' },
+          { pos: [117.1958, 34.2302], name: '阿喆米线',       icon: '🍝' },
+          { pos: [117.1834, 34.2638], name: '鬼王烤翅',       icon: '🍗' },
         ]
       },
       2: {
-        color: '#8cf0c8',
-        label: 'Day 2',
+        color: '#8fe6c2',
         points: [
-          { pos: [117.1788, 34.2643], name: '恒香包子店', icon: '🥟' },
-          { pos: [117.1807, 34.2648], name: '徐州博物馆', icon: '🏛️' },
-          { pos: [117.1965, 34.2315], name: '云龙湖(自由)', icon: '📷' },
+          { pos: [117.1788, 34.2643], name: '恒香包子店',     icon: '🥟' },
+          { pos: [117.1807, 34.2648], name: '徐州博物馆',     icon: '🏛️' },
+          { pos: [117.1795, 34.2667], name: '庆坤把子肉',     icon: '🥩' },
+          { pos: [117.1812, 34.2671], name: '阿兰油烫鸭',     icon: '🦆' },
         ]
       },
       3: {
-        color: '#ffd479',
-        label: 'Day 3',
+        color: '#ffd38a',
         points: [
-          { pos: [117.1820, 34.2650], name: '市区早餐·伴手礼', icon: '🧧' },
-          { pos: [117.2077, 34.2717], name: '徐州东站返程',    icon: '🚄' },
+          { pos: [117.1822, 34.2655], name: '建国炸串',       icon: '🍢' },
+          { pos: [117.1800, 34.2638], name: '夏抱冰冰粉',     icon: '🧊' },
+          { pos: [117.2077, 34.2717], name: '徐州东站返程',   icon: '🚄' },
         ]
       }
     };
 
     let amapInst = null;
-    const overlayGroups = {}; /* day -> { markers:[], polyline } */
-    let activeDay = 'all';
+    const overlayGroups = {};
 
     function makePinHtml(color, icon, name) {
-      return `
-        <div class="amap-wrapper">
-          <div class="amap-pin" style="background:${color}22;border-color:${color};color:${color}">${icon}</div>
-          <div class="amap-label">${name}</div>
-        </div>`;
+      return `<div class="amap-wrapper">
+        <div class="amap-pin" style="background:${color}22;border-color:${color}">${icon}</div>
+        <div class="amap-label">${name}</div>
+      </div>`;
     }
 
     function buildOverlays(map) {
       Object.entries(tripDays).forEach(([day, data]) => {
-        const markers = data.points.map(pt => {
-          const m = new AMap.Marker({
-            position: new AMap.LngLat(...pt.pos),
-            content: makePinHtml(data.color, pt.icon, pt.name),
-            offset: new AMap.Pixel(-15, -15),
-            zIndex: 120,
-          });
-          return m;
-        });
+        const markers = data.points.map(pt => new AMap.Marker({
+          position: new AMap.LngLat(...pt.pos),
+          content: makePinHtml(data.color, pt.icon, pt.name),
+          offset: new AMap.Pixel(-15, -15),
+          zIndex: 120,
+        }));
 
         const polyline = new AMap.Polyline({
           path: data.points.map(p => p.pos),
@@ -609,25 +554,12 @@
     }
 
     function showDay(day) {
-      activeDay = day;
-      const allPts = [];
-
       Object.entries(overlayGroups).forEach(([d, g]) => {
-        const visible = (day === 'all' || d === String(day));
-        if (visible) {
-          g.markers.forEach(m => m.show());
-          g.polyline.show();
-          g.markers.forEach(m => allPts.push(m.getPosition()));
-        } else {
-          g.markers.forEach(m => m.hide());
-          g.polyline.hide();
-        }
+        const show = (day === 'all' || d === String(day));
+        g.markers.forEach(m => show ? m.show() : m.hide());
+        show ? g.polyline.show() : g.polyline.hide();
       });
-
-      /* 自动缩放 */
-      if (amapInst && allPts.length) {
-        amapInst.setFitView(null, false, [50, 50, 50, 50]);
-      }
+      if (amapInst) amapInst.setFitView(null, false, [50, 50, 50, 50]);
     }
 
     function initAMap() {
@@ -637,15 +569,12 @@
         mapStyle: 'amap://styles/dark',
         features: ['bg', 'road', 'building', 'point'],
       });
-
       buildOverlays(amapInst);
-
       amapInst.on('complete', () => {
         setTimeout(() => amapInst.setFitView(null, false, [50, 50, 50, 50]), 300);
       });
     }
 
-    /* ── Tab 切换 ── */
     document.querySelectorAll('.day-tab').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
