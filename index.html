@@ -124,6 +124,41 @@
       .wrap{padding-top:18px}
       .topnav{width:100%}
     }
+
+    /* ── 地图板块 ── */
+    .map-card{padding:22px}
+    .map-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+    .map-header h2{margin:0;font-size:24px}
+    .day-tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .day-tab{
+      padding:9px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;
+      border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.07);color:#eaf1ff;
+      transition:background .2s,border-color .2s,color .2s;
+    }
+    .day-tab.active{background:rgba(121,168,255,.25);border-color:rgba(121,168,255,.5);color:#cfe0ff}
+    .day-tab:hover:not(.active){background:rgba(255,255,255,.12)}
+    #amap-container{
+      width:100%;height:460px;border-radius:16px;overflow:hidden;
+      border:1px solid rgba(255,255,255,.1);
+    }
+    .map-legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+    .legend-item{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
+    .legend-swatch{width:26px;height:4px;border-radius:2px;flex-shrink:0}
+    .amap-pin{
+      display:flex;align-items:center;justify-content:center;
+      width:30px;height:30px;border-radius:50%;font-size:12px;font-weight:700;
+      box-shadow:0 2px 8px rgba(0,0,0,.5);border:2px solid rgba(255,255,255,.3);
+      white-space:nowrap;cursor:default;
+    }
+    .amap-label{
+      position:absolute;left:34px;top:50%;transform:translateY(-50%);
+      background:rgba(11,16,32,.82);backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.14);border-radius:10px;
+      padding:5px 10px;font-size:12px;color:#eef4ff;white-space:nowrap;
+      pointer-events:none;
+    }
+    .amap-wrapper{position:relative;display:inline-flex;align-items:center}
+    @media (max-width:920px){#amap-container{height:340px}}
   </style>
 </head>
 <body>
@@ -135,6 +170,7 @@
       <a href="#day3">3月16日</a>
       <a href="#food">吃什么</a>
       <a href="#comments">留言建议</a>
+      <a href="#map-section">路线地图</a>
     </nav>
 
     <section class="hero" id="overview">
@@ -194,6 +230,33 @@
           <div class="weather-item">
             <h3>3 月 16 日（周一）</h3>
             <p>多云，约 7–13°C。徐州博物馆周一闭馆，所以这天只安排弹性活动和返程。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 行程地图 -->
+    <section class="section" id="map-section">
+      <div class="card map-card">
+        <div class="map-header">
+          <h2>行程路线图</h2>
+          <div class="day-tabs">
+            <button class="day-tab active" data-day="all">全览</button>
+            <button class="day-tab" data-day="1">Day 1 · 14日</button>
+            <button class="day-tab" data-day="2">Day 2 · 15日</button>
+            <button class="day-tab" data-day="3">Day 3 · 16日</button>
+          </div>
+        </div>
+        <div id="amap-container"></div>
+        <div class="map-legend">
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:#79a8ff"></span>Day 1｜云龙湖 → 云龙山
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:#8cf0c8"></span>Day 2｜博物馆 → 慢逛
+          </div>
+          <div class="legend-item">
+            <span class="legend-swatch" style="background:#ffd479"></span>Day 3｜机动 → 返程
           </div>
         </div>
       </div>
@@ -468,6 +531,128 @@
     });
 
     renderComments();
+  </script>
+
+  <!-- 高德地图 JS API v2.0 -->
+  <script src="https://webapi.amap.com/maps?v=2.0&key=a7377cb4ca2f8674716134874c58451b&callback=initAMap"></script>
+  <script>
+    /* ── 坐标数据 ── */
+    const tripDays = {
+      1: {
+        color: '#79a8ff',
+        label: 'Day 1',
+        points: [
+          { pos: [117.2077, 34.2717], name: '徐州东站', icon: '🚄' },
+          { pos: [117.1856, 34.2608], name: '陈开武饣它汤', icon: '🍜' },
+          { pos: [117.1965, 34.2315], name: '云龙湖',    icon: '🌊' },
+          { pos: [117.1977, 34.2420], name: '云龙山·索道', icon: '⛰️' },
+        ]
+      },
+      2: {
+        color: '#8cf0c8',
+        label: 'Day 2',
+        points: [
+          { pos: [117.1788, 34.2643], name: '恒香包子店', icon: '🥟' },
+          { pos: [117.1807, 34.2648], name: '徐州博物馆', icon: '🏛️' },
+          { pos: [117.1965, 34.2315], name: '云龙湖(自由)', icon: '📷' },
+        ]
+      },
+      3: {
+        color: '#ffd479',
+        label: 'Day 3',
+        points: [
+          { pos: [117.1820, 34.2650], name: '市区早餐·伴手礼', icon: '🧧' },
+          { pos: [117.2077, 34.2717], name: '徐州东站返程',    icon: '🚄' },
+        ]
+      }
+    };
+
+    let amapInst = null;
+    const overlayGroups = {}; /* day -> { markers:[], polyline } */
+    let activeDay = 'all';
+
+    function makePinHtml(color, icon, name) {
+      return `
+        <div class="amap-wrapper">
+          <div class="amap-pin" style="background:${color}22;border-color:${color};color:${color}">${icon}</div>
+          <div class="amap-label">${name}</div>
+        </div>`;
+    }
+
+    function buildOverlays(map) {
+      Object.entries(tripDays).forEach(([day, data]) => {
+        const markers = data.points.map(pt => {
+          const m = new AMap.Marker({
+            position: new AMap.LngLat(...pt.pos),
+            content: makePinHtml(data.color, pt.icon, pt.name),
+            offset: new AMap.Pixel(-15, -15),
+            zIndex: 120,
+          });
+          return m;
+        });
+
+        const polyline = new AMap.Polyline({
+          path: data.points.map(p => p.pos),
+          strokeColor: data.color,
+          strokeWeight: 3,
+          strokeOpacity: 0.85,
+          strokeDasharray: [8, 5],
+          lineJoin: 'round',
+          lineCap: 'round',
+          zIndex: 50,
+        });
+
+        overlayGroups[day] = { markers, polyline };
+        map.add(markers);
+        map.add(polyline);
+      });
+    }
+
+    function showDay(day) {
+      activeDay = day;
+      const allPts = [];
+
+      Object.entries(overlayGroups).forEach(([d, g]) => {
+        const visible = (day === 'all' || d === String(day));
+        if (visible) {
+          g.markers.forEach(m => m.show());
+          g.polyline.show();
+          g.markers.forEach(m => allPts.push(m.getPosition()));
+        } else {
+          g.markers.forEach(m => m.hide());
+          g.polyline.hide();
+        }
+      });
+
+      /* 自动缩放 */
+      if (amapInst && allPts.length) {
+        amapInst.setFitView(null, false, [50, 50, 50, 50]);
+      }
+    }
+
+    function initAMap() {
+      amapInst = new AMap.Map('amap-container', {
+        zoom: 13,
+        center: [117.192, 34.252],
+        mapStyle: 'amap://styles/dark',
+        features: ['bg', 'road', 'building', 'point'],
+      });
+
+      buildOverlays(amapInst);
+
+      amapInst.on('complete', () => {
+        setTimeout(() => amapInst.setFitView(null, false, [50, 50, 50, 50]), 300);
+      });
+    }
+
+    /* ── Tab 切换 ── */
+    document.querySelectorAll('.day-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.day-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        if (amapInst) showDay(btn.dataset.day);
+      });
+    });
   </script>
 </body>
 </html>
