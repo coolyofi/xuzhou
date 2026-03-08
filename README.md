@@ -1,54 +1,22 @@
 # 徐州 3 天 2 夜 旅行路线
 
-这是一个静态的单文件网站，内容来自桌面上的 `xuzhou_trip_site.html`。已经把所有样式和脚本内联，准备好直接发布到任何支持静态文件的服务。
+把桌面上那个 HTML 文件整理到这个仓库里，主要是方便随便发给朋友看。
 
-## 如何上线
+## 怎么用
 
-1. **GitHub Pages**（推荐）
-   - 将本仓库 push 到 GitHub。
-   - 在仓库设置中启用 **Pages**，选择 `main` 分支的 root 目录作为源。
-   - 刷新设置页面后几分钟会生成一个可访问的 URL，例如 `https://<your-username>.github.io/<repo>`。
+- 不需要搭什么环境，直接把 `index.html` 放到任何能托静态文件的地方就行。
+- 想本地预览，可以在这个目录打开终端：
+  ```sh
+  python3 -m http.server 8000    # 或者 npx serve .
+  ```
+  然后在浏览器里打开 `http://localhost:8000`。
 
-   如果想自动部署，可添加下面的 workflow（`.github/workflows/pages.yml`）：
-   ```yaml
-   name: Deploy to GitHub Pages
-   on:
-     push:
-       branches:
-         - main
-   jobs:
-     deploy:
-       runs-on: ubuntu-latest
-       steps:
-         - uses: actions/checkout@v3
-         - uses: peaceiris/actions-gh-pages@v3
-           with:
-             github_token: ${{ secrets.GITHUB_TOKEN }}
-             publish_dir: ./
-   ```
+- 如果你会用 GitHub，可以把仓库传上去，然后打开 *Settings → Pages* 把它设成首页，几分钟就能访问。
+  也可以用 Netlify、Vercel 之类的平台直接点几下部署。
 
-2. **Netlify / Vercel / Cloudflare Pages**
-   - 这些平台都能直接从 GitHub 仓库部署。
-   - 同样只需要在配置里指定建站目录为仓库根目录即可。
-
-3. **自建静态服务器**
-   - 简单方法：
-     ```sh
-     # Python 3
-     python -m http.server 8000
-     # 或者使用 npm 包
-     npx serve .
-     ```
-   - 文件放在任一 Web 服务器根目录（nginx、Apache）下即可。
-
-## 评论功能说明
-留言区使用 `localStorage` 存储，每个浏览器独立，适合演示和收集个人意见。若需要集中展示所有用户留言，请考虑接入后端数据库（例如 Firebase、Supabase、简单的 Express API 等）。
-
-## 结构
-
-- `index.html` – 全部页面内容
-- `.github/workflows/pages.yml` –（可选）GitHub Pages 自动部署配置
+## 留言说明
+页面下方的留言区只是存在你浏览器里的，大家的留言互不干扰。要是以后想大家都能看到同一批留言，就得接个简单的后台，像 Firebase、Supabase 这种随便搞。
 
 ---
 
-© 2026 个人制作，欢迎分享与改进。
+欢迎随手转发给要去徐州的朋友。
